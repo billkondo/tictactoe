@@ -1,0 +1,34 @@
+version: "3.9"
+services: 
+  db:
+    image: neo4j:4.3.0
+    environment: 
+      - NEO4J_AUTH=neo4j/development
+      - NEO4J_apoc_export_file_enabled=true
+      - NEO4J_apoc_import_file_enabled=true
+      - NEO4J_apoc_import_file_use__neo4j__config=true
+      - NEO4J_apoc_uuid_enabled=true
+      - NEO4JLABS_PLUGINS=["apoc"]
+      - NEO4J_dbms_allow__upgrade=true
+    ports: 
+      - "7474:7474" 
+      - "7687:7687"
+    volumes: 
+      - ./db_data/neo4j/data:/data
+      - ./db_data/neo4j/logs:/logs
+      - ./db_data/neo4j/import:/var/lib/neo4j/import 
+      - ./db_data/neo4j/plugins:/plugins 
+      - ./db_data/neo4j/conf/:/var/lib/neo4j/conf
+  redis:
+    image: redis:alpine
+    ports: 
+      - "6379:6379"
+    volumes: 
+      - ./db_data/redis:/data
+  mongodb:
+    image: mongo:latest
+    ports:
+      - 27017:27017
+    volumes:
+      - ./db_data/mongodb:/data/db
+  

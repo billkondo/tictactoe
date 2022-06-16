@@ -1,0 +1,4 @@
+node_modules
+
+# database development data
+db_data
