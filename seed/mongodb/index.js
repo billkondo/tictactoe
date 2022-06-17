@@ -4,12 +4,15 @@ const { BANNER } = require('../../domain/item_category');
 
 const seedItem = require('./seed_item');
 const seedUser = require('./seed_user');
+const seedMatch = require('./seed_match');
 
 const seed = async () => {
   const ITEMS_COUNT = 10;
   const items = [];
   const USERS_COUNT = 50;
   const users = [];
+  const MATCHES_COUNT = 150;
+  const matches = [];
 
   for (let i = 0; i < ITEMS_COUNT; ++i) items.push(seedItem());
 
@@ -31,7 +34,22 @@ const seed = async () => {
     users.push(user);
   }
 
-  await saveData({ users });
+  for (let i = 0; i < MATCHES_COUNT; ++i) {
+    const firstUserID = faker.datatype.number({
+      min: 0,
+      max: users.length - 1,
+    });
+    let secondUserID = faker.datatype.number({ min: 0, max: users.length - 1 });
+
+    while (secondUserID === firstUserID)
+      secondUserID = faker.datatype.number({ min: 0, max: users.length - 1 });
+
+    const match = seedMatch(users[firstUserID], users[secondUserID]);
+
+    matches.push(match);
+  }
+
+  saveData({ users, matches });
 };
 
 const selectItems = (items, itemsToChoose = 0) => {
@@ -60,11 +78,12 @@ const setUserBanner = (user) => {
   }
 };
 
-const saveData = async ({ users }) => {
+const saveData = async ({ users, matches }) => {
   const mongo = new MongoDB();
 
   await mongo.connect();
   await mongo.usersCollection().insertMany(users);
+  await mongo.matchesCollection().insertMany(matches);
 };
 
 module.exports = seed;

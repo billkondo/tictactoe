@@ -4,6 +4,7 @@ class MongoDB {
   URL = 'mongodb://localhost:27017';
   DB_NAME = 'TIC_TAC_TOE';
   USERS_COLLECTION = 'USERS';
+  MATCHES_COLLECTION = 'MATCHES';
 
   constructor() {
     this.client = new MongoClient(this.URL);
@@ -19,6 +20,10 @@ class MongoDB {
 
   usersCollection() {
     return this.db().collection(this.USERS_COLLECTION);
+  }
+
+  matchesCollection() {
+    return this.db().collection(this.MATCHES_COLLECTION);
   }
 }
 
