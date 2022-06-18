@@ -50,6 +50,8 @@ const seed = async () => {
   }
 
   saveData({ users, matches });
+
+  return { users, matches };
 };
 
 const selectItems = (items, itemsToChoose = 0) => {

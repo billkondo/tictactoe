@@ -14,11 +14,22 @@ const seedMatch = (firstUser, secondUser) => {
   const plays = seedPlays(timeFormat);
   const matchWinner = winner(plays);
 
-  const findResult = () => {
-    if (matchWinner === 1) return PLAYER_1_WON;
-    if (matchWinner === 2) return PLAYER_2_WON;
-    return DRAW;
-  };
+  let result;
+  let ratingDeltaPlayer1 = faker.datatype.number({ min: 1, max: 15 });
+  let ratingDeltaPlayer2 = faker.datatype.number({ min: 1, max: 15 });
+  switch (matchWinner) {
+    case 1:
+      result = PLAYER_1_WON;
+      ratingDeltaPlayer2 *= 1;
+      break;
+    case 2:
+      result = PLAYER_2_WON;
+      ratingDeltaPlayer1 *= 1;
+      break;
+    default:
+      result = DRAW;
+      ratingDeltaPlayer1 = ratingDeltaPlayer2 = 0;
+  }
 
   return {
     matchID,
@@ -27,12 +38,14 @@ const seedMatch = (firstUser, secondUser) => {
     player1: {
       username: firstUser.username,
       rating: firstUser.rating,
+      ratingDelta: ratingDeltaPlayer1,
     },
     player2: {
       username: secondUser.username,
       rating: secondUser.rating,
+      ratingDelta: ratingDeltaPlayer2,
     },
-    result: findResult(),
+    result,
     plays,
   };
 };

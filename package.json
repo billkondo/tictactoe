@@ -12,6 +12,7 @@
     "@faker-js/faker": "^7.2.0"
   },
   "dependencies": {
-    "mongodb": "^4.7.0"
+    "mongodb": "^4.7.0",
+    "neo4j-driver": "^4.4.6"
   }
 }
