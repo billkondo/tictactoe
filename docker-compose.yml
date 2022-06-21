@@ -1,6 +1,16 @@
 version: "3.9"
 services: 
-  db:
+  postgres:
+    image: postgres:14.3
+    environment:
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_USER=admin
+      - POSTGRES_DB=tic-tac-toe
+    ports:
+      - 5432:5432
+    volumes:
+      - ./db_data/postgres:/var/lib/postgresql/data
+  neo4j:
     image: neo4j:4.3.0
     environment: 
       - NEO4J_AUTH=neo4j/development
@@ -11,8 +21,8 @@ services:
       - NEO4JLABS_PLUGINS=["apoc"]
       - NEO4J_dbms_allow__upgrade=true
     ports: 
-      - "7474:7474" 
-      - "7687:7687"
+      - 7474:7474 
+      - 7687:7687
     volumes: 
       - ./db_data/neo4j/data:/data
       - ./db_data/neo4j/logs:/logs
@@ -22,7 +32,7 @@ services:
   redis:
     image: redis:alpine
     ports: 
-      - "6379:6379"
+      - 6379:6379
     volumes: 
       - ./db_data/redis:/data
   mongodb:
