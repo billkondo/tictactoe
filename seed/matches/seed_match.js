@@ -1,4 +1,5 @@
 const { faker } = require('@faker-js/faker');
+
 const matchWinner = require('../../domain/matches/match_winner');
 const {
   PLAYER_1_WON,
@@ -9,7 +10,12 @@ const {
 const seedPlays = require('../matches/seed_plays');
 const seedTimeFormat = require('../matches/seed_time_format');
 
-const seedMatch = (firstUser, secondUser) => {
+const seedMatch = (
+  firstUser,
+  firstUserGameData,
+  secondUser,
+  secondUserGameData
+) => {
   const matchID = faker.datatype.uuid();
   const timeFormat = seedTimeFormat();
   const startTime = faker.date.recent();
@@ -39,12 +45,12 @@ const seedMatch = (firstUser, secondUser) => {
     startTime,
     player1: {
       username: firstUser.username,
-      rating: firstUser.rating,
+      rating: firstUserGameData.rating,
       ratingDelta: ratingDeltaPlayer1,
     },
     player2: {
       username: secondUser.username,
-      rating: secondUser.rating,
+      rating: secondUserGameData.rating,
       ratingDelta: ratingDeltaPlayer2,
     },
     result,

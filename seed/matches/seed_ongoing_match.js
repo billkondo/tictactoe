@@ -1,9 +1,15 @@
 const { faker } = require('@faker-js/faker');
-const { ONGOING } = require('../../domain/match_result');
-const seedPlays = require('../matches/seed_plays');
-const seedTimeFormat = require('../matches/seed_time_format');
 
-const seedOngoingMatch = (player1, player2) => {
+const { ONGOING } = require('../../domain/match_result');
+const seedPlays = require('./seed_plays');
+const seedTimeFormat = require('./seed_time_format');
+
+const seedOngoingMatch = (
+  firstUser,
+  firstUserGameData,
+  secondUser,
+  secondUserGameData
+) => {
   const matchID = faker.datatype.uuid();
   const timeFormat = seedTimeFormat();
   const plays = seedPlays(timeFormat);
@@ -22,12 +28,12 @@ const seedOngoingMatch = (player1, player2) => {
     timeFormat,
     startTime,
     player1: {
-      username: player1.username,
-      rating: player1.rating,
+      username: firstUser.username,
+      rating: firstUserGameData.rating,
     },
     player2: {
-      username: player2.username,
-      rating: player2.rating,
+      username: secondUser.username,
+      rating: secondUserGameData.rating,
     },
     result: ONGOING,
     plays,

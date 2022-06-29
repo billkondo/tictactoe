@@ -5,9 +5,19 @@ const MongoDB = require('./databases/mongodb');
 const Neo4j = require('./databases/neo4j');
 const Redis = require('./databases/redis');
 const postgres = require('./databases/postgres');
-const seedUser = require('./seed/users/seed_users');
+const seedUser = require('./seed/users/seed_user');
 const seedPostgres = require('./seed/postgres');
 const createTables = require('./domain/postgres/create_tables');
+const seedUserGameData = require('./seed/users/seed_user_game_data');
+const seedItem = require('./seed/items/seed_item');
+const seedUserInventoryData = require('./seed/users/seed_user_inventory_data');
+const seedUserSocialData = require('./seed/users/seed_user_social_data');
+const config = require('./seed/config');
+const seedMatches = require('./seed/matches/seed_matches');
+const seedInventory = require('./seed/items/seed_inventory');
+const seedFollowings = require('./seed/users/seed_followings');
+const seedOngoingMatches = require('./seed/matches/seed_ongoing_matches');
+const seedInvites = require('./seed/matches/invites/seed_invites');
 
 const runSeed = async () => {
   console.info('Clear Postgres');
@@ -30,14 +40,45 @@ const runSeed = async () => {
   await redis.connect();
   await redis.client.flushAll();
 
+  const {
+    USERS_COUNT,
+    ITEMS_COUNT,
+    MATCHES_COUNT,
+    FOLLOWINGS_COUNT,
+    ONGOING_MATCHES_COUNT,
+    INVITES_COUNT,
+  } = config;
+
   console.info('Seed users');
-  const USERS_COUNT = 50;
   const users = [...Array(USERS_COUNT)].map(seedUser);
 
+  console.info('Seed users data');
+  const usersGameData = [...Array(USERS_COUNT)].map(seedUserGameData);
+  const usersInventoryData = [...Array(USERS_COUNT)].map(seedUserInventoryData);
+  const usersSocialData = [...Array(USERS_COUNT)].map(seedUserSocialData);
+
+  console.info('Seed items');
+  const items = [...Array(ITEMS_COUNT)].map(seedItem);
+
+  console.info('Seed inventory');
+  seedInventory(usersInventoryData, items);
+
+  console.info('Seed matches');
+  const matches = seedMatches(MATCHES_COUNT, users, usersGameData);
+  const ongoingMatches = seedOngoingMatches(
+    ONGOING_MATCHES_COUNT,
+    users,
+    usersGameData
+  );
+  const invites = seedInvites(INVITES_COUNT, users);
+
+  console.info('Seed followings');
+  const followings = seedFollowings(FOLLOWINGS_COUNT, users, usersSocialData);
+
   await seedPostgres({ users });
-  // const { users, matches } = await seedMongoDB();
-  // await seedNeo4j({ users, matches });
-  // await seedRedis({ users });
+  await seedMongoDB({ users, usersInventoryData, usersSocialData, matches });
+  await seedNeo4j({ users, matches, usersGameData, followings });
+  await seedRedis({ ongoingMatches, invites });
 };
 
 runSeed()

@@ -1,5 +1,6 @@
 const { faker } = require('@faker-js/faker');
-const seedTimeFormat = require('../matches/seed_time_format');
+
+const seedTimeFormat = require('../seed_time_format');
 
 const seedInvite = (sender, receiver) => {
   const timeFormat = seedTimeFormat();

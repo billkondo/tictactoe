@@ -1,23 +1,22 @@
-const pickTwoItems = require('../../utils/pick_two_items');
 const userFollowsUser = require('../../domain/neo4j/user_follows_user');
 const addUser = require('../../domain/neo4j/add_user');
 const addMatch = require('../../domain/neo4j/add_match');
-const doesUserFollowUser = require('../../domain/neo4j/does_user_follow_user');
 
-const seed = async ({ users, matches }) => {
-  const USER_FOLLOWINGS = 50;
+const seed = async ({ users, matches, usersGameData, followings }) => {
+  console.info('Seed Neo4J');
 
-  for (const user of users) await addUser(user);
+  console.info('  Seed Users');
+  for (let i = 0; i < users.length; i++)
+    await addUser(users[i], usersGameData[i]);
 
+  console.info('  Seed Matches');
   for (const match of matches) await addMatch(match);
 
-  for (let i = 0; i < USER_FOLLOWINGS; i++) {
-    let [userFollowing, userFollowed] = pickTwoItems(users);
+  console.info('  Seed Followings');
+  for (const following of followings) {
+    const [user1, user2] = following;
 
-    while (await doesUserFollowUser(userFollowing, userFollowed))
-      [userFollowing, userFollowed] = pickTwoItems(users);
-
-    await userFollowsUser(userFollowing, userFollowed);
+    await userFollowsUser(users[user1], users[user2]);
   }
 };
 
