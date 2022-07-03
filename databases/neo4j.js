@@ -1,14 +1,12 @@
 const { driver, auth } = require('neo4j-driver');
 
-class Neo4j {
-  URL = 'neo4j://localhost:7687';
-  USER = 'neo4j';
-  PASSWORD = 'development';
 
-  constructor() {
-    this.driver = driver(this.URL, auth.basic(this.USER, this.PASSWORD));
-    this.session = this.driver.session();
-  }
-}
+const URL = 'neo4j://localhost:7687';
+const USER = 'neo4j';
+const PASSWORD = 'development';
 
-module.exports = Neo4j;
+
+const neo4j = driver(URL, auth.basic(USER, PASSWORD));
+
+
+module.exports = neo4j;

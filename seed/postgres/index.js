@@ -1,10 +1,11 @@
-const addUser = require('../../domain/postgres/add_user');
+const postgres = require('../../domain/postgres');
 
-const seed = async ({ users }) => {
+
+module.exports = async function ({ users }) {
+
   console.info('Seed Postgres');
 
   console.info('  Seed Users');
-  await Promise.all(users.map(addUser));
-};
+  await Promise.all(users.map(postgres.user.create));
 
-module.exports = seed;
+};

@@ -1,16 +1,14 @@
-const MongoDB = require('../../databases/mongodb');
+const mongodb = require('../../databases/mongodb');
 
-const seed = async ({
+
+module.exports = async function ({
   users,
   matches,
   usersInventoryData,
   usersSocialData,
-}) => {
+}) {
+
   console.info('Seed MongoDB');
-
-  const mongo = new MongoDB();
-
-  await mongo.connect();
 
   console.info('  Seed Users');
   const usersModels = [];
@@ -27,10 +25,9 @@ const seed = async ({
 
     usersModels.push(userModel);
   }
-  await mongo.usersCollection().insertMany(usersModels);
+  await mongodb.users().insertMany(usersModels);
 
   console.info('  Seed Matches');
-  await mongo.matchesCollection().insertMany(matches);
-};
+  await mongodb.matches().insertMany(matches);
 
-module.exports = seed;
+};

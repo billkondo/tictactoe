@@ -1,8 +1,8 @@
 const seedMongoDB = require('./seed/mongodb');
 const seedNeo4j = require('./seed/neo4j');
 const seedRedis = require('./seed/redis');
-const MongoDB = require('./databases/mongodb');
-const Neo4j = require('./databases/neo4j');
+const mongodb = require('./databases/mongodb');
+const neo4j = require('./databases/neo4j');
 const Redis = require('./databases/redis');
 const postgres = require('./databases/postgres');
 const seedUser = require('./seed/users/seed_user');
@@ -19,7 +19,9 @@ const seedFollowings = require('./seed/users/seed_followings');
 const seedOngoingMatches = require('./seed/matches/seed_ongoing_matches');
 const seedInvites = require('./seed/matches/invites/seed_invites');
 
+
 const runSeed = async () => {
+
   console.info('Clear Postgres');
   await postgres.dropSchema();
   await postgres.createSchema();
@@ -28,12 +30,10 @@ const runSeed = async () => {
   await createTables();
 
   console.info('Clear Mongo');
-  const mongo = new MongoDB();
-  await mongo.db().dropDatabase();
+  await mongodb.dropDatabase();
 
   console.info('Clear Neo4j');
-  const neo4j = new Neo4j();
-  await neo4j.session.run('MATCH (n) DETACH DELETE n');
+  await neo4j.session().run('MATCH (n) DETACH DELETE n');
 
   console.info('Clear Redis');
   const redis = new Redis();
@@ -79,7 +79,9 @@ const runSeed = async () => {
   await seedMongoDB({ users, usersInventoryData, usersSocialData, matches });
   await seedNeo4j({ users, matches, usersGameData, followings });
   await seedRedis({ ongoingMatches, invites });
+
 };
+
 
 runSeed()
   .catch((error) => console.log(error))

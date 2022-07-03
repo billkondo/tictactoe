@@ -1,30 +1,28 @@
 const { MongoClient } = require('mongodb');
 
-class MongoDB {
-  URL = 'mongodb://localhost:27017';
-  DB_NAME = 'TIC_TAC_TOE';
-  USERS_COLLECTION = 'USERS';
-  MATCHES_COLLECTION = 'MATCHES';
 
-  constructor() {
-    this.client = new MongoClient(this.URL);
-  }
+const URL = 'mongodb://localhost:27017';
+const DB_NAME = 'TIC_TAC_TOE';
+const USERS_COLLECTION = 'USERS';
+const MATCHES_COLLECTION = 'MATCHES';
 
-  async connect() {
-    await this.client.connect();
-  }
 
-  db() {
-    return this.client.db(this.DB_NAME);
-  }
+const mongodb = new MongoClient(URL);
 
-  usersCollection() {
-    return this.db().collection(this.USERS_COLLECTION);
-  }
 
-  matchesCollection() {
-    return this.db().collection(this.MATCHES_COLLECTION);
-  }
+mongodb.users = function () {
+  return mongodb.db(DB_NAME).collection(USERS_COLLECTION);
 }
 
-module.exports = MongoDB;
+
+mongodb.matches = function () {
+  return mongodb.db(DB_NAME).collection(MATCHES_COLLECTION);
+}
+
+
+mongodb.dropDatabase = async function () {
+  await mongodb.db(DB_NAME).dropDatabase();
+}
+
+
+module.exports = mongodb;
