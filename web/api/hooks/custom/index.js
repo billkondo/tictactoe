@@ -14,6 +14,13 @@ module.exports = function defineCustomHook(sails) {
 
       sails.log.info('Initializing project hook... (`api/hooks/custom/`)');
 
+      // Move domain to sails
+      var path = require('path');
+      var appDomainPath = path.join(sails.config.appPath, '..', 'domain');
+      var appDomain = require(appDomainPath);
+
+      sails.appDomain = appDomain;
+
       // Check Stripe/Sendgrid configuration (for billing and emails).
       var IMPORTANT_STRIPE_CONFIG = ['stripeSecret', 'stripePublishableKey'];
       var IMPORTANT_SENDGRID_CONFIG = ['sendgridSecret', 'internalEmailAddress'];

@@ -40,7 +40,14 @@ the account verification message.)`,
       type: 'string',
       example: 'Frida Kahlo de Rivera',
       description: 'The user\'s full name.',
-    }
+    },
+
+    username: {
+      require: true,
+      type: 'string',
+      example: 'usernamelol',
+      description: 'The user\'s nickname',
+    },
 
   },
 
@@ -63,10 +70,20 @@ the account verification message.)`,
       description: 'The provided email address is already in use.',
     },
 
+    usernameAlreadyPicked: {
+      statusCode: 409,
+      description: 'The provided username is already picked.',
+    },
+
   },
 
 
-  fn: async function ({emailAddress, password, fullName}) {
+  fn: async function ({emailAddress, password, fullName, username}) {
+
+    var isUsernameAvailable = await sails.appDomain.user.usernameAvailable(username);
+    if (!isUsernameAvailable) {
+      throw 'usernameAlreadyPicked';
+    }
 
     var newEmailAddress = emailAddress.toLowerCase();
 
@@ -121,6 +138,8 @@ the account verification message.)`,
     } else {
       sails.log.info('Skipping new account email verification... (since `verifyEmailAddresses` is disabled)');
     }
+
+    await sails.appDomain.user.create({emailAddress, fullName, username});
 
   }
 

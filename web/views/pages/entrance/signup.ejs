@@ -16,6 +16,11 @@
           <div class="invalid-feedback" v-if="formErrors.emailAddress">Please enter a valid email address.</div>
         </div>
         <div class="form-group">
+          <label for="username">Username</label>
+          <input class="form-control" id="username" type="text"  :class="[formErrors.username ? 'is-invalid' : '']" v-model.trim="formData.username" placeholder="sturgeon" autocomplete="username">
+          <div class="invalid-feedback" v-if="formErrors.username">Please enter a valid username.</div>
+        </div>
+        <div class="form-group">
           <label for="password">Choose a password</label>
           <input class="form-control" id="password" type="password"  :class="[formErrors.password ? 'is-invalid' : '']" v-model.trim="formData.password" placeholder="••••••••" autocomplete="new-password">
           <div class="invalid-feedback" v-if="formErrors.password">Please enter a password.</div>
@@ -30,6 +35,7 @@
           <label for="terms-agreement" class="form-check-label" :class="[formErrors.agreed ? 'text-danger' : '']">I have read &amp; agree to the <a target="_blank" href="/terms">terms of service</a>.</label>
         </div>
         <cloud-error v-if="cloudError==='emailAlreadyInUse'">It looks like there's already an account with your email address. If you forgot your password, you can recover it <a href="password/forgot">here</a>.</cloud-error>
+        <cloud-error v-else-if="cloudError==='usernameAlreadyPicked'">The provided username is already picked.</cloud-error>
         <cloud-error v-else-if="cloudError"></cloud-error>
         <div class="form-group">
           <ajax-button type="submit" :syncing="syncing" class="btn-dark btn-lg btn-block">Create account</ajax-button>
