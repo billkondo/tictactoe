@@ -41,6 +41,13 @@ module.exports = {
   },
 
 
+  findAll: async function () {
+
+    return postgres.user.findAll();
+
+  },
+
+
   usernameAvailable: async function (username) {
 
     const user = await postgres.user.findByUsername(username);

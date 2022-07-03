@@ -60,8 +60,29 @@ module.exports.bootstrap = async function() {
 
   // By convention, this is a good place to set up fake data during development.
   await User.createEach([
-    { emailAddress: 'admin@example.com', fullName: 'Ryan Dahl', isSuperAdmin: true, password: await sails.helpers.passwords.hashPassword('abc123') },
+    { emailAddress: 'admin@example.com', fullName: 'Ryan Dahl', isSuperAdmin: true, password: await sails.helpers.passwords.hashPassword('abc123'), username: 'admin' },
   ]);
+
+  if (sails.config.environment === 'development') {
+    let newUsers = 0;
+    const users = await sails.appDomain.user.findAll();
+    const defaultPassword = await sails.helpers.passwords.hashPassword('123456');
+
+    for (const user of users) {
+      const { email, name, username } = user;
+      const exists = (await User.find({ username })).length > 0;
+
+      if (!exists) {
+        newUsers += 1;
+        await User.create({ emailAddress: email.toLowerCase(), fullName: name, password: defaultPassword, username });
+        sails.log.verbose(`${username} was created in User model`);
+      } else {
+        sails.log.verbose(`${username} was already created in User model`);
+      }
+    }
+
+    sails.log.info(`${newUsers} new user(s) created in User model`);
+  }
 
   // Save new bootstrap version
   await sails.helpers.fs.writeJson.with({

@@ -16,6 +16,15 @@ module.exports = {
   },
 
 
+  findAll: async function () {
+
+    const users = await postgres`SELECT * FROM usuario`;
+
+    return users.map(this.mapUser);
+
+  },
+
+
   findByUsername: async function (username) {
 
     const users = await postgres`
@@ -24,11 +33,26 @@ module.exports = {
     `;
 
     if (users.length > 0)
-      return users[0];
+      return this.mapUser(users[0]);
 
     return null;
 
   },
+
+
+  mapUser: function (user) {
+
+    const { user_id, nome, username, email, data_de_cadastro } = user;
+
+    return {
+      userID: user_id,
+      name: nome,
+      username,
+      email,
+      registerDate: data_de_cadastro,
+    }
+
+  }
 
 
 };
