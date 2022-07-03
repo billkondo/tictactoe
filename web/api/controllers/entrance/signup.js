@@ -93,7 +93,8 @@ the account verification message.)`,
       fullName,
       emailAddress: newEmailAddress,
       password: await sails.helpers.passwords.hashPassword(password),
-      tosAcceptedByIp: this.req.ip
+      tosAcceptedByIp: this.req.ip,
+      username,
     }, sails.config.custom.verifyEmailAddresses? {
       emailProofToken: await sails.helpers.strings.random('url-friendly'),
       emailProofTokenExpiresAt: Date.now() + sails.config.custom.emailProofTokenTTL,

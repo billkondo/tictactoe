@@ -58,6 +58,14 @@ email status until they click the link in the confirmation email.`
       example: 'Mary Sue van der McHenst'
     },
 
+    username: {
+      type: 'string',
+      required: true,
+      description: 'User\'s nickname.',
+      maxLength: 64,
+      example: 'marysue',
+    },
+
     isSuperAdmin: {
       type: 'boolean',
       description: 'Whether this user is a "super admin" with extra permissions, etc.',
