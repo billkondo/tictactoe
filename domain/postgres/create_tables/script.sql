@@ -9,12 +9,18 @@ CREATE TABLE loja
     store_id uuid PRIMARY KEY
 );
 
+CREATE TABLE item_categoria
+(
+    nome text PRIMARY KEY
+);
+
 CREATE TABLE item
 (
     item_id uuid PRIMARY KEY,
     nome text NOT NULL,
     descricao text,
     categoria text,
+    FOREIGN KEY (categoria) REFERENCES item_categoria(nome) ON DELETE NO ACTION,
     valor integer NOT NULL CHECK (valor >= 0)
 );
 
@@ -136,8 +142,8 @@ CREATE TABLE denuncia_comentario
     FOREIGN KEY (comment_id) REFERENCES comentario(comment_id) ON DELETE NO ACTION,
     PRIMARY KEY(user_id, comment_id),
     motivo text NOT NULL,
-    categoria text
-
+    categoria text,
+    FOREIGN KEY (categoria) REFERENCES item_categoria(nome) ON DELETE NO ACTION
 );
 
 CREATE TABLE denuncia_mensagem
@@ -148,7 +154,8 @@ CREATE TABLE denuncia_mensagem
     FOREIGN KEY (message_id) REFERENCES mensagem(message_id) ON DELETE NO ACTION,
     PRIMARY KEY(user_id, message_id),
     motivo text NOT NULL,
-    categoria text
+    categoria text,
+    FOREIGN KEY (categoria) REFERENCES item_categoria(nome) ON DELETE NO ACTION
 );
 
 CREATE TABLE responde
