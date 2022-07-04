@@ -2,7 +2,7 @@ const { itemCategories } = require('../../domain/item_category');
 const postgres = require('../../domain/postgres');
 
 
-module.exports = async function ({ users, stores }) {
+module.exports = async function ({ users, stores, coins, items, storesItems, }) {
 
   console.info('Seed Postgres');
 
@@ -12,7 +12,24 @@ module.exports = async function ({ users, stores }) {
   console.info('  Seed Stores');
   await Promise.all(stores.map(postgres.store.createStore));
 
+  console.info('  Seed Coins');
+  await Promise.all(coins.map(postgres.store.createCoin));
+
   console.info('  Seed Item Categories');
   await Promise.all(itemCategories.map(postgres.store.createItemCategory));
+
+  console.info('  Seed Items');
+  await Promise.all(items.map(postgres.store.createItem));
+
+  console.info('  Seed Stores Items');
+  for (const storeItems of storesItems) {
+    const { store } = storeItems;
+
+    for (const item of storeItems.items) {
+      const { startTime, endTime, promoValue } = item;
+
+      await postgres.store.addItemToStore(item, store, startTime, endTime, promoValue);
+    }
+  }
 
 };

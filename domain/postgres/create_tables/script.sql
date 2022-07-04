@@ -10,6 +10,12 @@ CREATE TABLE loja
     nome text NOT NULL
 );
 
+CREATE TABLE moeda
+(
+    coin_id text PRIMARY KEY,
+    nome text NOT NULL UNIQUE
+);
+
 CREATE TABLE item_categoria
 (
     nome text PRIMARY KEY
@@ -19,10 +25,15 @@ CREATE TABLE item
 (
     item_id uuid PRIMARY KEY,
     nome text NOT NULL,
-    descricao text,
+    descricao text NOT NULL,
     categoria text NOT NULL,
     FOREIGN KEY (categoria) REFERENCES item_categoria(nome) ON DELETE NO ACTION,
-    valor integer NOT NULL CHECK (valor > 0)
+    valor integer NOT NULL CHECK (valor > 0),
+    moeda_id text,
+    FOREIGN KEY (moeda_id) REFERENCES moeda(coin_id) ON DELETE NO ACTION,
+    moeda_nome text,
+    FOREIGN KEY (moeda_nome) REFERENCES moeda(nome) ON DELETE NO ACTION,
+    url text
 );
 
 CREATE TABLE torneio
@@ -91,8 +102,8 @@ CREATE TABLE anuncia
     FOREIGN KEY (item_id) REFERENCES item(item_id) ON DELETE NO ACTION,
     PRIMARY KEY(store_id, item_id),
     data_de_inicio timestamptz NOT NULL,
-    data_de_termino timestamptz NOT NULL,
-    valor_promocional integer CHECK (valor_promocional >= 0)
+    data_de_termino timestamptz,
+    valor_promocional integer CHECK (valor_promocional > 0)
 );
 
 CREATE TABLE adquire
