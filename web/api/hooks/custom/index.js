@@ -191,6 +191,7 @@ will be disabled and/or hidden in the UI.
               throw new Error('Cannot attach logged-in user as `req.me` because this property already exists!  (Is it being attached somewhere else?)');
             }
             req.me = loggedInUser;
+            req.user = await sails.appDomain.user.findByUsername(req.me.username);
 
             // If our "lastSeenAt" attribute for this user is at least a few seconds old, then set it
             // to the current timestamp.

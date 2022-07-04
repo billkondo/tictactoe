@@ -1,0 +1,9 @@
+<div id="profile" v-cloak>
+
+  <div class="container pt-5 pb-5">
+    <h6><%= matchesCount %> games</h6>
+    <game-card v-for="match in matches" :match="match" :key="match.matchID" />
+  </div>
+
+</div>
+<%- /* Expose server-rendered data as window.SAILS_LOCALS :: */ exposeLocalsToBrowser() %>

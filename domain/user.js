@@ -48,9 +48,16 @@ module.exports = {
   },
 
 
+  findByUsername: async function (username) {
+
+    return await postgres.user.findByUsername(username);
+
+  },
+
+
   usernameAvailable: async function (username) {
 
-    const user = await postgres.user.findByUsername(username);
+    const user = await this.findByUsername(username);
 
     // User with username was found, so username is not available
     if (user)
