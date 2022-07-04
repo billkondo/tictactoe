@@ -6,7 +6,8 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 CREATE TABLE loja
 (
-    store_id uuid PRIMARY KEY
+    store_id uuid PRIMARY KEY,
+    nome text NOT NULL
 );
 
 CREATE TABLE item_categoria
@@ -19,9 +20,9 @@ CREATE TABLE item
     item_id uuid PRIMARY KEY,
     nome text NOT NULL,
     descricao text,
-    categoria text,
+    categoria text NOT NULL,
     FOREIGN KEY (categoria) REFERENCES item_categoria(nome) ON DELETE NO ACTION,
-    valor integer NOT NULL CHECK (valor >= 0)
+    valor integer NOT NULL CHECK (valor > 0)
 );
 
 CREATE TABLE torneio
