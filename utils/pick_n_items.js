@@ -1,19 +1,15 @@
-const { faker } = require('@faker-js/faker');
+const shuffle = require('./shuffle');
+
 
 const pickNItems = (items = [], itemsToPick = 0) => {
+
   if (items.length < itemsToPick) throw new Error('items.length < itemsToPick');
 
-  const pickedItems = [];
-  const itemsCopy = [...items];
+  const itemsCopy = shuffle([...Array(items.length).keys()]);
 
-  while (pickedItems.length < itemsToPick) {
-    const id = faker.datatype.number({ min: 0, max: itemsCopy.length - 1 });
+  return itemsCopy.slice(items.length - itemsToPick);
 
-    pickedItems.push(id);
-    itemsCopy.splice(id, 1);
-  }
-
-  return pickedItems;
 };
+
 
 module.exports = pickNItems;
