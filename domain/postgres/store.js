@@ -6,11 +6,11 @@ module.exports = {
 
   createStore: async function (store) {
     
-    const { storeID, name } = store;
+    const { storeID, name, description } = store;
   
     await postgres`
-      INSERT INTO loja (store_id, nome)
-      VALUES (${storeID}, ${name})
+      INSERT INTO loja (store_id, nome, descricao)
+      VALUES (${storeID}, ${name}, ${description})
     `;
 
   },
@@ -59,6 +59,28 @@ module.exports = {
       INSERT INTO anuncia (store_id, item_id, data_de_inicio, data_de_termino, valor_promocional)
       VALUES (${storeID}, ${itemID}, ${startTime}, ${endTime}, ${promoValue})
     `;
+
+  },
+
+
+  findAllStores: async function () {
+
+    const stores = await postgres`SELECT * FROM loja`;
+
+    return stores.map(this.mapStore);
+
+  },
+
+
+  mapStore: function (store) {
+
+    const { store_id, nome, descricao } = store;
+
+    return {
+      storeID: store_id,
+      name: nome,
+      description: descricao,
+    };
 
   },
 

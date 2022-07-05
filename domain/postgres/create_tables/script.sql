@@ -7,7 +7,8 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 CREATE TABLE loja
 (
     store_id uuid PRIMARY KEY,
-    nome text NOT NULL
+    nome text NOT NULL,
+    descricao text NOT NULL
 );
 
 CREATE TABLE moeda

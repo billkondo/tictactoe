@@ -1,0 +1,26 @@
+<div id="stores" v-cloak>
+
+  <div class="container pt-5 pb-5">
+    <h1>Stores</h1>
+
+    <div class="row mt-4">
+      <% stores.forEach(function (store) { %>
+        <div class="store-card-container">
+          <div class="card text-white store-card <%= store.isOfficial ? 'bg-primary' : 'bg-secondary' %>">
+            <a class="store-overlay" href="<%= store.url %>"></a>
+            <div class="card-body">
+              <h5 class="card-title">
+                <%= store.name %>
+              </h5>
+              <p class="card-text">
+                <%= store.description %>
+              </p>
+            </div>
+          </div>
+        </div>
+      <% }); %>
+    </div>
+  </div>
+
+</div>
+<%- /* Expose server-rendered data as window.SAILS_LOCALS :: */ exposeLocalsToBrowser() %>
