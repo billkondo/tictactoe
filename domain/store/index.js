@@ -19,7 +19,14 @@ module.exports = {
 
     return storeID === officialStore.storeID && name === officialStore.name;
 
-  }
+  },
+
+
+  findAdsFromStore: function (storeName) {
+
+    return postgres.store.findAdsFromStore(storeName);
+
+  },
 
 
 };
