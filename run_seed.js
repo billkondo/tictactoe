@@ -65,7 +65,7 @@ const runSeed = async () => {
     officialStore,
     {
       name: 'Test Store',
-      storeID: '9e3157b9-fc86-415a-ab45-a22d269cc58b',
+      storeID: 'test-store',
       description: 'Some products here',
     },
   ];

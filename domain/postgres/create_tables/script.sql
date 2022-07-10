@@ -6,7 +6,7 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 CREATE TABLE loja
 (
-    store_id uuid PRIMARY KEY,
+    store_id text PRIMARY KEY, -- usar nome transformado como id
     nome text NOT NULL UNIQUE,
     descricao text NOT NULL
 );
@@ -25,8 +25,8 @@ CREATE TABLE item_categoria
 
 CREATE TABLE item
 (
-    item_id uuid PRIMARY KEY,
-    nome text NOT NULL,
+    item_id text PRIMARY KEY, -- usar nome transformado como id
+    nome text NOT NULL UNIQUE,
     descricao text NOT NULL,
     categoria text NOT NULL,
     FOREIGN KEY (categoria) REFERENCES item_categoria(nome) ON DELETE NO ACTION,
@@ -98,8 +98,8 @@ CREATE TABLE grupo
 
 CREATE TABLE anuncia
 (
-    store_id uuid,
-    item_id uuid,
+    store_id text,
+    item_id text,
     FOREIGN KEY (store_id) REFERENCES loja(store_id) ON DELETE NO ACTION,
     FOREIGN KEY (item_id) REFERENCES item(item_id) ON DELETE NO ACTION,
     PRIMARY KEY(store_id, item_id),
@@ -111,7 +111,7 @@ CREATE TABLE anuncia
 CREATE TABLE adquire
 (
     user_id uuid,
-    item_id uuid,
+    item_id text,
     FOREIGN KEY (user_id) REFERENCES usuario(user_id) ON DELETE NO ACTION,
     FOREIGN KEY (item_id) REFERENCES item(item_id) ON DELETE NO ACTION,
     PRIMARY KEY(user_id, item_id)

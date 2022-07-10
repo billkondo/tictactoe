@@ -2,11 +2,12 @@ const { faker } = require('@faker-js/faker');
 const { BANNER } = require('../../domain/item_category');
 const seedCategory = require('./seed_category');
 const seedCoin = require('./seed_coin');
+const { transform } = require('../../utils');
 
 
 const seedItem = () => {
-  const itemID = faker.datatype.uuid();
   const name = faker.music.songName();
+  const itemID = transform.toURL(name);
   const description = seedDescription();
   const category = seedCategory();
   const imageUrl = category === BANNER ? faker.image.cats() : null;

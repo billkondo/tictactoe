@@ -1,0 +1,28 @@
+<div id="item" v-cloak>
+
+  <div class="container pt-5 pb-5">
+
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/stores">Stores</a></li>
+        <li class="breadcrumb-item"><a href="<%= storeURL %>"><%= storeName %></a></li>
+        <li class="breadcrumb-item active" aria-current="page"><%= itemName %></li>
+      </ol>
+    </nav>
+
+    <div class="row p-3">
+      <div class="col-8">
+        <h3><%= ad.item.name %></h3>
+
+        <p><%= ad.item.description %></p>
+
+        <div>
+          <b><%= ad.promoValue || ad.item.value %></b>
+          <i class="fa <%= ad.item.coin.iconCSSClass %> ml-1"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<%- /* Expose server-rendered data as window.SAILS_LOCALS :: */ exposeLocalsToBrowser() %>

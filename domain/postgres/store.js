@@ -43,8 +43,28 @@ module.exports = {
     const { itemID, name, description, category, imageUrl, value, coin } = item;
 
     await postgres`
-      INSERT INTO item (item_id, nome, descricao, categoria, valor, moeda_id, moeda_nome, moeda_classe_css, url)
-      VALUES (${itemID}, ${name}, ${description}, ${category}, ${value}, ${coin.coinID}, ${coin.name}, ${coin.iconCSSClass}, ${imageUrl})
+      INSERT INTO item (
+        item_id,
+        nome,
+        descricao,
+        categoria,
+        valor,
+        moeda_id,
+        moeda_nome,
+        moeda_classe_css,
+        url
+      )
+      VALUES (
+        ${itemID},
+        ${name},
+        ${description},
+        ${category},
+        ${value},
+        ${coin.coinID},
+        ${coin.name},
+        ${coin.iconCSSClass},
+        ${imageUrl}
+      )
     `;
 
   },
@@ -72,32 +92,49 @@ module.exports = {
   },
 
 
-  findAdsFromStore: async function (storeName) {
+  findAdQuery: postgres`
+    SELECT
+      loja.store_id as store_id,
+      loja.nome as loja_nome,
+      loja.descricao as loja_descricao,
+      item.item_id as item_id,
+      item.nome as item_nome,
+      item.descricao as item_descricao,
+      item.categoria as item_categoria,
+      item.valor as item_valor,
+      item.moeda_id as item_moeda_id,
+      item.moeda_nome as item_moeda_nome,
+      item.moeda_classe_css as item_moeda_classe_css,
+      item.url as item_url,
+      anuncia.data_de_inicio,
+      anuncia.data_de_termino,
+      anuncia.valor_promocional
+    FROM anuncia 
+    INNER JOIN item ON item.item_id = anuncia.item_id
+    INNER JOIN loja ON loja.store_id = anuncia.store_id
+  `,
 
+
+  findAdsFromStore: async function (storeID) {
+    
     const ads = await postgres`
-      SELECT
-        loja.store_id as store_id,
-        loja.nome as loja_nome,
-        loja.descricao as loja_descricao,
-        item.item_id as item_id,
-        item.nome as item_nome,
-        item.descricao as item_descricao,
-        item.categoria as item_categoria,
-        item.valor as item_valor,
-        item.moeda_id as item_moeda_id,
-        item.moeda_nome as item_moeda_nome,
-        item.moeda_classe_css as item_moeda_classe_css,
-        item.url as item_url,
-        anuncia.data_de_inicio,
-        anuncia.data_de_termino,
-        anuncia.valor_promocional
-      FROM anuncia 
-      INNER JOIN item ON item.item_id = anuncia.item_id
-      INNER JOIN loja ON loja.store_id = anuncia.store_id
-      WHERE loja.nome=${storeName}
+      ${this.findAdQuery}
+      WHERE loja.store_id=${storeID}
     `;
 
     return ads.map(this.mapAd);
+
+  },
+
+
+  findAdFromStore: async function (storeID, itemID) {
+
+    const ad = await postgres`
+      ${this.findAdQuery}
+      WHERE loja.store_id=${storeID} AND item.item_id=${itemID}
+    `;
+
+    return this.mapAd(ad[0]);
 
   },
 

@@ -20,7 +20,7 @@ module.exports = {
     const stores = await sails.appDomain.store.list();
     const storesModels = stores.map(store => ({
       ...store,
-      url: `/stores/items/${sails.appUtils.transform.toURL(store.name)}`,
+      url: `/stores/items/${store.storeID}`,
       isOfficial: sails.appDomain.store.isOfficialStore(store),
     }));
 

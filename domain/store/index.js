@@ -22,9 +22,16 @@ module.exports = {
   },
 
 
-  findAdsFromStore: function (storeName) {
+  findAdsFromStore: function (storeID) {
 
-    return postgres.store.findAdsFromStore(storeName);
+    return postgres.store.findAdsFromStore(storeID);
+
+  },
+
+
+  findAdFromStore: function (storeID, itemID) {
+
+    return postgres.store.findAdFromStore(storeID, itemID);
 
   },
 

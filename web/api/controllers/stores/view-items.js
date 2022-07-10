@@ -18,13 +18,16 @@ module.exports = {
 
   fn: async function () {
 
-    const { name } = this.req.params;
-    const storeName = sails.appUtils.transform.fromURL(name);
-    const ads = await sails.appDomain.store.findAdsFromStore(storeName);
+    const { storeID } = this.req.params;
+    const ads = await sails.appDomain.store.findAdsFromStore(storeID);
+
+    for (let i = 0; i < ads.length; i++) {
+      ads[i].item.url = `/stores/items/${storeID}/${ads[i].item.itemID}`;
+    }
 
     return {
       ads,
-      storeName,
+      storeName: ads.length > 0 ? ads[0].store.name : '',
     };
 
   },

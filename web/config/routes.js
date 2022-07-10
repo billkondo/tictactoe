@@ -35,8 +35,9 @@ module.exports.routes = {
 
   'GET /profile':            { action: 'profile/view-profile' },
 
-  'GET /stores':             { action: 'stores/view-stores' },
-  'GET /stores/items/:name': { action: 'stores/view-items' },
+  'GET /stores':                            { action: 'stores/view-stores' },
+  'GET /stores/items/:storeID':             { action: 'stores/view-items' },
+  'GET /stores/items/:storeID/:itemID':     { action: 'stores/view-item' },
 
 
   //  ╔╦╗╦╔═╗╔═╗  ╦═╗╔═╗╔╦╗╦╦═╗╔═╗╔═╗╔╦╗╔═╗   ┬   ╔╦╗╔═╗╦ ╦╔╗╔╦  ╔═╗╔═╗╔╦╗╔═╗
