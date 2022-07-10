@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "seed": "node run_seed.js"
+    "seed": "node run_seed.js && rm -r ./web/.tmp"
   },
   "author": "",
   "license": "MIT",
