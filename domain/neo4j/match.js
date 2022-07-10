@@ -19,7 +19,7 @@ module.exports = {
       MATCH (player2:User { username: "${player2.username}" })
       CREATE (match:Match {
         matchID: "${matchID}",
-        startTime: ${types.Date.fromStandardDate(startTime)},
+        startTime: datetime("${types.DateTime.fromStandardDate(startTime)}"),
         timeFormatLimit: ${timeFormat.limit},
         timeFormatIncrement: ${timeFormat.increment},
         result: "${result}"
