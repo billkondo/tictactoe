@@ -7,14 +7,15 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 CREATE TABLE loja
 (
     store_id uuid PRIMARY KEY,
-    nome text NOT NULL DISTINCT,
+    nome text NOT NULL UNIQUE,
     descricao text NOT NULL
 );
 
 CREATE TABLE moeda
 (
     coin_id text PRIMARY KEY,
-    nome text NOT NULL UNIQUE
+    nome text NOT NULL UNIQUE,
+    classe_css text NOT NULL
 );
 
 CREATE TABLE item_categoria
@@ -33,7 +34,7 @@ CREATE TABLE item
     moeda_id text,
     FOREIGN KEY (moeda_id) REFERENCES moeda(coin_id) ON DELETE NO ACTION,
     moeda_nome text,
-    FOREIGN KEY (moeda_nome) REFERENCES moeda(nome) ON DELETE NO ACTION,
+    moeda_classe_css text,
     url text
 );
 

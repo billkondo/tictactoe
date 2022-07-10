@@ -18,11 +18,11 @@ module.exports = {
 
   createCoin: async function (coin) {
 
-    const { coinID, name } = coin;
+    const { coinID, name, iconCSSClass } = coin;
 
     await postgres`
-      INSERT INTO moeda (coin_id, nome)
-      VALUES (${coinID}, ${name})
+      INSERT INTO moeda (coin_id, nome, classe_css)
+      VALUES (${coinID}, ${name}, ${iconCSSClass})
     `;
 
   },
@@ -43,8 +43,8 @@ module.exports = {
     const { itemID, name, description, category, imageUrl, value, coin } = item;
 
     await postgres`
-      INSERT INTO item (item_id, nome, descricao, categoria, valor, moeda_id, moeda_nome, url)
-      VALUES (${itemID}, ${name}, ${description}, ${category}, ${value}, ${coin.coinID}, ${coin.name}, ${imageUrl})
+      INSERT INTO item (item_id, nome, descricao, categoria, valor, moeda_id, moeda_nome, moeda_classe_css, url)
+      VALUES (${itemID}, ${name}, ${description}, ${category}, ${value}, ${coin.coinID}, ${coin.name}, ${coin.iconCSSClass}, ${imageUrl})
     `;
 
   },
@@ -85,7 +85,8 @@ module.exports = {
         item.categoria as item_categoria,
         item.valor as item_valor,
         item.moeda_id as item_moeda_id,
-        item.moeda_nome as item_moeada_nome,
+        item.moeda_nome as item_moeda_nome,
+        item.moeda_classe_css as item_moeda_classe_css,
         item.url as item_url,
         anuncia.data_de_inicio,
         anuncia.data_de_termino,
@@ -131,6 +132,7 @@ module.exports = {
       item_valor,
       item_moeda_id,
       item_moeda_nome,
+      item_moeda_classe_css,
       item_url
     } = ad;
     const item = {
@@ -142,6 +144,7 @@ module.exports = {
       coin: {
         coinID: item_moeda_id,
         name: item_moeda_nome,
+        iconCSSClass: item_moeda_classe_css,
       },
       imageUrl: item_url,
     };

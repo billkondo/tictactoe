@@ -17,6 +17,10 @@
           <div class="card">
             <div class="card-body">
               <h5 class="card-title"><%= ad.item.name %></h5>
+              <div class="card-text">
+                <b><%= ad.promoValue || ad.item.value %></b>
+                <i class="fa <%= ad.item.coin.iconCSSClass %> ml-1"></i>
+              </div>
             </div>
           </div>
         </div>

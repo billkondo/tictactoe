@@ -1,5 +1,13 @@
-const MATCH_COIN = { coinID: 'MATCH_COIN_TYPE', name: 'Match Coin' };
-const TOURNMENT_COIN = { coinID: 'TOURNMENT_COIN_TYPE', name: 'Tournment Coin' };
+const MATCH_COIN = { 
+  coinID: 'MATCH_COIN_TYPE', 
+  name: 'Match Coin',
+  iconCSSClass: 'fa-money'
+};
+const TOURNMENT_COIN = { 
+  coinID: 'TOURNMENT_COIN_TYPE', 
+  name: 'Tournment Coin',
+  iconCSSClass: 'fa-trophy',
+};
 
 
 module.exports = {
