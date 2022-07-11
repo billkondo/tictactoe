@@ -2,31 +2,41 @@
 
   <div class="container pt-5 pb-5">
 
-    <nav aria-label="breadcrumb">
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="/stores">Stores</a></li>
-        <li class="breadcrumb-item active" aria-current="page">
-          <%= storeName %>
-        </li>
-      </ol>
-    </nav>
+    <div class="row pb-5">
+      <%- include('../../partials/user-wallets.ejs', { wallets: res.userWallets } ); %>
+    </div>
 
-    <% ads.forEach(function (ad) { %>
-      <div class="row p-3 justify-content-center">
-        <div class="col-8">
-          <div class="card">
-            <a class="card-overlay" href="<%= ad.item.url %>"></a>
-            <div class="card-body">
-              <h5 class="card-title"><%= ad.item.name %></h5>
-              <div class="card-text">
-                <b><%= ad.promoValue || ad.item.value %></b>
-                <i class="fa <%= ad.item.coin.iconCSSClass %> ml-1"></i>
+    <div class="row">
+      <div class="col-12 p-0">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/stores">Stores</a></li>
+            <li class="breadcrumb-item active" aria-current="page">
+              <%= storeName %>
+            </li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+
+    <div class="cards">
+      <% ads.forEach(function (ad) { %>
+        <div class="row mb-3">
+          <div class="col-12 p-0">
+            <div class="card shadow-sm">
+              <a class="card-overlay" href="<%= ad.item.url %>"></a>
+              <div class="card-body">
+                <h5 class="card-title"><%= ad.item.name %></h5>
+                <div class="card-text">
+                  <b><%= ad.promoValue || ad.item.value %></b>
+                  <i class="fa <%= ad.item.coin.iconCSSClass %> ml-1"></i>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    <% }) %>
+      <% }); %>
+    </div>
 
   </div>
 

@@ -1,21 +1,32 @@
 <div id="stores" v-cloak>
 
   <div class="container pt-5 pb-5">
-    <h1>Stores</h1>
 
-    <div class="row mt-4">
+    <div class="row pb-5">
+      <%- include('../../partials/user-wallets.ejs', { wallets: res.userWallets } ); %>
+    </div>
+
+    <div class="row">
+      <div class="col-12 p-0">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item active" aria-current="page">Stores</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+
+    <div class="row cards">
       <% stores.forEach(function (store) { %>
-        <div class="store-card-container">
-          <div class="card text-white store-card <%= store.isOfficial ? 'bg-primary' : 'bg-secondary' %>">
-            <a class="store-overlay" href="<%= store.url %>"></a>
-            <div class="card-body">
-              <h5 class="card-title">
-                <%= store.name %>
-              </h5>
-              <p class="card-text">
-                <%= store.description %>
-              </p>
-            </div>
+        <div class="card shadow text-white <%= store.isOfficial ? 'bg-primary' : 'bg-secondary' %>">
+          <a class="store-overlay" href="<%= store.url %>"></a>
+          <div class="card-body">
+            <h5 class="card-title">
+              <%= store.name %>
+            </h5>
+            <p class="card-text">
+              <%= store.description %>
+            </p>
           </div>
         </div>
       <% }); %>

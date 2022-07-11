@@ -64,13 +64,6 @@ CREATE TABLE transacao
     tipo_da_moeda text NOT NULL
 );
 
-CREATE TABLE carteira
-(
-    wallet_id uuid PRIMARY KEY,
-    saldo integer NOT NULL, -- saldo pode ser negativo
-    tipo_da_moeda text NOT NULL
-);
-
 CREATE TABLE usuario
 (
     user_id uuid PRIMARY KEY,
@@ -79,6 +72,17 @@ CREATE TABLE usuario
     email text UNIQUE NOT NULL,
     data_de_cadastro timestamptz
 );
+
+CREATE TABLE carteira
+(
+    user_id uuid,
+    FOREIGN KEY (user_id) REFERENCES usuario(user_id) ON DELETE NO ACTION,
+    coin_id text,
+    FOREIGN KEY (coin_id) REFERENCES moeda(coin_id) ON DELETE NO ACTION,
+    PRIMARY KEY (user_id, coin_id),
+    saldo integer NOT NULL CHECK (saldo >= 0)
+);
+
 
 CREATE TABLE mensagem
 (
@@ -186,20 +190,11 @@ CREATE TABLE responde
 CREATE TABLE altera
 (
     exchange_id uuid,
-    wallet_id uuid,
-    FOREIGN KEY (exchange_id) REFERENCES transacao(exchange_id) ON DELETE NO ACTION,
-    FOREIGN KEY (wallet_id) REFERENCES carteira(wallet_id) ON DELETE NO ACTION,
-    PRIMARY KEY(exchange_id, wallet_id)
-);
-
-CREATE TABLE pertence
-(
-    -- parece errado, mas cada carteira só aparece na relação pertence no máximo uma vez
-    wallet_id uuid UNIQUE,
     user_id uuid,
-    FOREIGN KEY (wallet_id) REFERENCES carteira(wallet_id) ON DELETE NO ACTION,
-    FOREIGN KEY (user_id) REFERENCES usuario(user_id) ON DELETE NO ACTION,
-    PRIMARY KEY(wallet_id, user_id)
+    coin_id text,
+    FOREIGN KEY (exchange_id) REFERENCES transacao(exchange_id) ON DELETE NO ACTION,
+    FOREIGN KEY (user_id, coin_id) REFERENCES carteira(user_id, coin_id) ON DELETE NO ACTION,
+    PRIMARY KEY(exchange_id, user_id, coin_id)
 );
 
 CREATE TABLE envia

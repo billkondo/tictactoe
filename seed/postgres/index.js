@@ -2,7 +2,15 @@ const { itemCategories } = require('../../domain/item_category');
 const postgres = require('../../domain/postgres');
 
 
-module.exports = async function ({ users, stores, coins, items, storesItems, }) {
+module.exports = async function ({ 
+  users,
+  stores,
+  coins,
+  items,
+  storesItems,
+  matchCoinsWallets,
+  tournmentCoinsWallets,
+}) {
 
   console.info('Seed Postgres');
 
@@ -30,6 +38,16 @@ module.exports = async function ({ users, stores, coins, items, storesItems, }) 
 
       await postgres.store.addItemToStore(item, store, startTime, endTime, promoValue);
     }
+  }
+
+  console.info('  Seed wallets');
+  for (let i = 0; i < users.length; i++) {
+    const user = users[i];
+    const matchCoinsWallet = matchCoinsWallets[i];
+    const tournmentCoinsWallet = tournmentCoinsWallets[i];
+
+    await postgres.wallet.create(user, matchCoinsWallet);
+    await postgres.wallet.create(user, tournmentCoinsWallet);
   }
 
 };

@@ -256,6 +256,17 @@ will be disabled and/or hidden in the UI.
 
             return next();
           }
+        },
+        '/stores*': {
+          skipAssets: true,
+          fn: async function (req, res, next) {
+            if (!req.user) { return next(); }
+
+            req.userWallets = await sails.appDomain.wallet.fromUser(req.user);
+            res.userWallets = req.userWallets;
+
+            return next();
+          },
         }
       }
     }

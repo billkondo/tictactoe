@@ -2,13 +2,21 @@
 
   <div class="container pt-5 pb-5">
 
-    <nav aria-label="breadcrumb">
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="/stores">Stores</a></li>
-        <li class="breadcrumb-item"><a href="<%= storeURL %>"><%= storeName %></a></li>
-        <li class="breadcrumb-item active" aria-current="page"><%= itemName %></li>
-      </ol>
-    </nav>
+    <div class="row pb-5">
+      <%- include('../../partials/user-wallets.ejs', { wallets: res.userWallets } ); %>
+    </div>
+
+    <div class="row">
+      <div class="col-12 p-0">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/stores">Stores</a></li>
+            <li class="breadcrumb-item"><a href="<%= storeURL %>"><%= storeName %></a></li>
+            <li class="breadcrumb-item active" aria-current="page"><%= itemName %></li>
+          </ol>
+        </nav>
+      </div>
+    </div>
 
     <div class="row p-3">
       <div class="col-8">

@@ -1,10 +1,10 @@
 const MATCH_COIN = { 
-  coinID: 'MATCH_COIN_TYPE', 
+  coinID: 'match-coin', 
   name: 'Match Coin',
   iconCSSClass: 'fa-money'
 };
 const TOURNMENT_COIN = { 
-  coinID: 'TOURNMENT_COIN_TYPE', 
+  coinID: 'tournment-coin', 
   name: 'Tournment Coin',
   iconCSSClass: 'fa-trophy',
 };
