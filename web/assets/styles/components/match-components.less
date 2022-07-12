@@ -5,6 +5,11 @@
 [parasails-component='game-card'] {
   position: relative;
 
+  .card {
+    border-radius: 0;
+    border-top: none;
+  }
+
   .overlay {
     position: absolute;
     top: 0;
@@ -13,8 +18,34 @@
     width: 100%;
     z-index: 2;
   }
+
+  .rating {
+    font-size: 0.8rem;
+  }
 }
 
 [parasails-component='game-card']:hover {
   background-color: rgb(240, 248, 255, 0.2);
+}
+
+[parasails-component='board'] {
+  width: 100%;
+  height: 100%;
+
+  .cell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .cell-1 {
+    border-left: 1px solid #D3D3D3;
+    border-right: 1px solid #D3D3D3;
+  }
+
+  .cell-2 {
+    border-top: 1px solid #D3D3D3;
+    border-bottom: 1px solid #D3D3D3;
+  }
+
 }

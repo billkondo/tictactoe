@@ -45,24 +45,35 @@ parasails.registerComponent('game-card', {
   //  ╠═╣ ║ ║║║║
   //  ╩ ╩ ╩ ╩ ╩╩═╝
   template: `
-    <div class="container pt-3 pb-3">
-      <a class="overlay" :href="url"></a>
-      <div class="row ml-0 mr-0">
-        <div class="col-3">
-          <div class="d-flex justify-content-end">
-            {{ player1.username }}
+    <div class="game-card">
+      <div class="container pt-3 pb-3 card">
+        <a class="overlay" :href="url"></a>
+        <div class="row ml-0 mr-0">
+          <div class="col-3">
+            <board :match="match"></board>
           </div>
-          <div class="d-flex justify-content-end">
-            {{ player1.rating }}
-            <span class="pl-1" :class="player1.css"> {{ player1.delta }} </span>
-          </div>
-        </div>
-        <div class="col-1 mr-4 ml-4">X</div>
-        <div class="col-3">
-          <div> {{ player2.username }} </div>
-          <div>
-            {{ player2.rating }}
-            <span class="pl-1" :class="player2.css"> {{ player2.delta }} </span>
+          <div class="col-9">
+            <div class="row">
+              <div class="col-4">
+                <div class="d-flex justify-content-end">
+                  {{ player1.username }}
+                </div>
+                <div class="rating d-flex justify-content-end">
+                  {{ player1.rating }}
+                  <span class="pl-1" :class="player1.css"> {{ player1.delta }} </span>
+                </div>
+              </div>
+              <div class="col-2 row justify-content-center align-items-center">X</div>
+              <div class="col-4">
+                <div>
+                  {{ player2.username }}
+                </div>
+                <div class="rating">
+                  {{ player2.rating }}
+                  <span class="pl-1" :class="player2.css"> {{ player2.delta }} </span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

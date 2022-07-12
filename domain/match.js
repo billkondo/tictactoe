@@ -1,5 +1,7 @@
 const mongodb = require('./mongodb');
 
+const matchGridFromPlays = require('./matches/match_grid_from_plays');
+
 
 module.exports = {
 
@@ -9,6 +11,9 @@ module.exports = {
     return mongodb.match.userMatches(user);
 
   },
+
+
+  matchGridFromPlays,
 
 
 }

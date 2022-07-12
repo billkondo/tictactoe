@@ -21,7 +21,10 @@ module.exports = {
     const matches = await sails.appDomain.match.userMatches(this.req.user);
 
     return {
-      matches,
+      matches: matches.map(match => ({
+        ...match,
+        grid: sails.appDomain.match.matchGridFromPlays(match.plays),
+      })),
       matchesCount: matches.length,
     };
 
