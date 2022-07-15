@@ -1,6 +1,6 @@
 const matchGridFromPlays = require('./match_grid_from_plays');
 
-const matchWinner = (plays = []) => {
+function matchWinner (plays = []) {
   const grid = matchGridFromPlays(plays);
   const winningPositions = [
     [

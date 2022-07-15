@@ -1,5 +1,5 @@
 const { faker } = require('@faker-js/faker');
-const matchWinner = require('../../domain/matches/match_winner');
+const { matchWinner } = require('../../domain/match');
 
 const seedPlays = (timeFormat) => {
   const plays = [];

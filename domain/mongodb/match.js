@@ -19,4 +19,13 @@ module.exports = {
   },
 
 
+  findMatch: async function (matchID) {
+
+    return await mongodb.matches().findOne({
+      matchID,
+    });
+    
+  },
+
+
 }

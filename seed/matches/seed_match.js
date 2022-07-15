@@ -1,6 +1,6 @@
 const { faker } = require('@faker-js/faker');
 
-const matchWinner = require('../../domain/matches/match_winner');
+const { matchWinner } = require('../../domain/match');
 const {
   PLAYER_1_WON,
   PLAYER_2_WON,
@@ -28,11 +28,11 @@ const seedMatch = (
   switch (winner) {
     case 1:
       result = PLAYER_1_WON;
-      ratingDeltaPlayer2 *= 1;
+      ratingDeltaPlayer2 *= -1;
       break;
     case 2:
       result = PLAYER_2_WON;
-      ratingDeltaPlayer1 *= 1;
+      ratingDeltaPlayer1 *= -1;
       break;
     default:
       result = DRAW;

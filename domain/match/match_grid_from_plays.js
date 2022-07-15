@@ -1,4 +1,4 @@
-const matchGridFromPlays = (plays) => {
+function matchGridFromPlays (plays) {
   const grid = [
     ['', '', ''],
     ['', '', ''],

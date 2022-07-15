@@ -1,0 +1,18 @@
+<div id="match" v-cloak>
+
+  <div class="container pt-5 pb-5">
+    <div class="row justify-content-center">
+      <div class="col-8">
+        <div class="row mb-3">
+          <%- include('../../partials/match-player-info.ejs', { player: player1 } ); %>
+        </div>
+        <board :match="match"></board>
+        <div class="row justify-content-end mt-3">
+          <%- include('../../partials/match-player-info.ejs', { player: player2 } ); %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<%- /* Expose server-rendered data as window.SAILS_LOCALS :: */ exposeLocalsToBrowser() %>

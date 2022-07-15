@@ -39,6 +39,7 @@ module.exports.routes = {
   'GET /stores/items/:storeID':             { action: 'stores/view-items' },
   'GET /stores/items/:storeID/:itemID':     { action: 'stores/view-item' },
 
+  'GET /match/:matchID':    { action: 'match/view-match' },
 
   //  ╔╦╗╦╔═╗╔═╗  ╦═╗╔═╗╔╦╗╦╦═╗╔═╗╔═╗╔╦╗╔═╗   ┬   ╔╦╗╔═╗╦ ╦╔╗╔╦  ╔═╗╔═╗╔╦╗╔═╗
   //  ║║║║╚═╗║    ╠╦╝║╣  ║║║╠╦╝║╣ ║   ║ ╚═╗  ┌┼─   ║║║ ║║║║║║║║  ║ ║╠═╣ ║║╚═╗

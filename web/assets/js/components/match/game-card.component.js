@@ -11,27 +11,7 @@ parasails.registerComponent('game-card', {
   //  ╩╝╚╝╩ ╩ ╩╩ ╩╩═╝  ╚═╝ ╩ ╩ ╩ ╩ ╚═╝
   data: function () {
 
-    const { matchID, player1, player2, result } = this.match;
-
-    if (result === 'PLAYER_1_WON') {
-      player1.delta = `+${player1.ratingDelta}`;
-      player1.css = 'text-success';
-
-      player2.delta = `-${player2.ratingDelta}`;
-      player2.css = 'text-danger';
-    } else if (result === 'PLAYER_2_WON') {
-      player1.delta = `-${player1.ratingDelta}`;
-      player1.css = 'text-danger';
-
-      player2.delta = `+${player2.ratingDelta}`;
-      player2.css = 'text-success';
-    } else if (result === 'DRAW') {
-      player1.delta = `±${player1.ratingDelta}`;
-      player1.css = 'text-muted';
-
-      player2.delta = `±${player2.ratingDelta}`;
-      player2.css = 'text-muted';
-    }
+    const { matchID, player1, player2 } = this.match;
 
     return {
       player1,
@@ -60,7 +40,9 @@ parasails.registerComponent('game-card', {
                 </div>
                 <div class="rating d-flex justify-content-end">
                   {{ player1.rating }}
-                  <span class="pl-1" :class="player1.css"> {{ player1.delta }} </span>
+                  <span class="pl-1">
+                    <rating-change :rating-delta="player1.ratingDelta" />
+                  </span>
                 </div>
               </div>
               <div class="col-2 row justify-content-center align-items-center">X</div>
@@ -70,7 +52,9 @@ parasails.registerComponent('game-card', {
                 </div>
                 <div class="rating">
                   {{ player2.rating }}
-                  <span class="pl-1" :class="player2.css"> {{ player2.delta }} </span>
+                  <span class="pl-1">
+                    <rating-change :rating-delta="player2.ratingDelta" />
+                  </span>
                 </div>
               </div>
             </div>
