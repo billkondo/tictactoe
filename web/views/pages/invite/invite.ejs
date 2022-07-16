@@ -1,0 +1,52 @@
+<div id="invite" v-cloak>
+
+  <div class="container pt-5 pb-5">
+    <div class="row justify-content-center">
+      <div class="col-6">
+        <h4 class="text-center mb-5">Play with a friend</h4>
+
+        <ajax-form action="createInvite" :syncing.sync="syncing" :form-data="formData" @submitted="submittedForm()">
+          <div class="form-group">
+            <label for="seconds-per-side">Seconds per side: <b>{{ formData.secondsPerSide }}</b> </label>
+            <input type="range" class="form-control-range" id="seconds-per-side" min="5" max="15" value="10" v-model="formData.secondsPerSide">
+          </div>
+
+          <div class="form-group">
+            <label for="increment">Increment in seconds: <b>{{ formData.increment }}</b> </label>
+            <input type="range" class="form-control-range" id="increment" min="0" max="6" value="3" v-model="formData.increment">
+          </div>
+
+          <div class="row mt-5 justify-content-center">
+            <p class="text-center">Choose your pieces</p>
+          </div>
+
+          <div class="row justify-content-center align-items-end">
+            <div class="card mr-3" @click="choosePieces('1')" :class="[formData.pieces === '1' ? 'border-primary' : '']">
+              <div class="card-body">
+                O
+              </div>
+            </div>
+            <div class="card card-mid" @click="choosePieces('random')" :class="[formData.pieces === 'random' ? 'border-primary' : '']">
+              <div class="card-body">
+                O <span class="ml-1 mr-1" style="font-size: 1.2rem;">/</span> X
+              </div>
+            </div>
+            <div class="card ml-3" @click="choosePieces('2')" :class="[formData.pieces === '2' ? 'border-primary' : '']">
+              <div class="card-body">
+                X
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group row mt-5 justify-content-center">
+            <div class="col-6">
+              <ajax-button :syncing="syncing" class="btn-dark btn-lg btn-block">Send invite</ajax-button>
+            </div>
+          </div>
+        </ajax-form>
+      </div>
+    </div>
+  </div>
+
+</div>
+<%- /* Expose server-rendered data as window.SAILS_LOCALS :: */ exposeLocalsToBrowser() %>
