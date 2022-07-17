@@ -51,7 +51,7 @@ module.exports = {
 
   fn: async function ({secondsPerSide, increment, pieces, userID}) {
 
-    const me = this.req.me;
+    const me = this.req.user;
     const otherUser = await sails.appDomain.user.findByID(userID);
 
     if (!otherUser) {

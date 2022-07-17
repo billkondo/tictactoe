@@ -1,8 +1,9 @@
 const mongodb = require('../mongodb');
 const redis = require('../redis');
 
-const { WAITING_FOR_START } = require('../match_result');
 const { generateUUID, tossACoin } = require('../../utils');
+const { WAITING_FOR_START } = require('../match_result');
+const { INVITE } = require('../notification');
 
 const matchGridFromPlays = require('./match_grid_from_plays');
 const matchWinner = require('./match_winner');
@@ -88,6 +89,7 @@ module.exports = {
       },
       timeFormat,
       sentTime,
+      type: INVITE,
     };
 
     await redis.match.add(match);

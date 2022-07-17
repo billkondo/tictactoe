@@ -50,11 +50,35 @@
         <div class="navbar-nav flex-row">
           <!-- LOGGED-IN NAVIGATION -->
           <% if(me) { %>
-          <a class="nav-item nav-link ml-2 ml-md-0 mr-2 mr-md-0" href="/stores"><i class="fa fa-shopping-bag pr-1"></i> Stores</a>
+          <a class="nav-item nav-link ml-2 ml-md-0 mr-2 mr-md-0" href="/stores"><i class="fa fa-shopping-bag"></i></a>
+
+          <div class="nav-item dropdown d-none d-sm-block">
+            <a class="nav-link" id="header-notifications-menu-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="fa fa-bell"></i>
+            </a>
+            <div style="left: auto; right: 0;" class="dropdown-menu" aria-labelledby="header-notifications-menu-link">
+              <% if (!req.userData.notifications.length) { %>
+                <div class="container">
+                  <div class="row justify-content-center align-items-center">
+                    <i class="fa fa-info-circle mr-2"></i> No notifications
+                  </div>
+                </div>
+              <% } else { %>
+                <div class="container p-4">
+                  <% req.userData.notifications.forEach(function (notification) { %>
+                    <div class="row justify-content-center align-items-center" style="min-width: 18rem;">
+                      <%- include('../partials/notification/notification.ejs', { notification } ); %>
+                    </div>
+                  <% }) %>
+                </div>
+              <% } %>
+            </div>
+          </div>
+
           <a class="nav-item nav-link ml-2 ml-md-0 mr-2 mr-md-0" href="/contact">Help</a>
           <!-- Only in desktop nav -->
           <div class="nav-item dropdown d-none d-sm-block">
-            <a class="nav-link dropdown-toggle" id="header-account-menu-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><%= me.username %></a>
+            <a class="nav-link" id="header-account-menu-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><%= me.username %></a>
             <div style="left: auto; right: 0;" class="dropdown-menu" aria-labelledby="header-account-menu-link">
               <a class="dropdown-item" href="/profile">Profile</a>
               <a class="dropdown-item" href="/account">Settings</a>

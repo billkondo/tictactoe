@@ -21,4 +21,19 @@ module.exports = {
   },
 
 
+  find: async function (username) {
+
+    const user = await mongodb.users().findOne({ username });
+
+    if (user) {
+      delete user._id;
+
+      return user;
+    }
+
+    return null;
+
+  },
+
+
 };

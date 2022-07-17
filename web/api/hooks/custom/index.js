@@ -206,6 +206,7 @@ will be disabled and/or hidden in the UI.
             }
             req.me = loggedInUser;
             req.user = await sails.appDomain.user.findByUsername(req.me.username);
+            req.userData = await sails.appDomain.user.data(req.me.username);
 
             // If our "lastSeenAt" attribute for this user is at least a few seconds old, then set it
             // to the current timestamp.

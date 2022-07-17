@@ -82,5 +82,12 @@ module.exports = {
 
   },
 
+
+  data: async function (username) {
+
+    return await mongodb.user.find(username);
+
+  },
+
   
 };
