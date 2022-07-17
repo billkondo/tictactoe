@@ -2,7 +2,7 @@ const mongodb = require('./mongodb');
 const neo4j = require('./neo4j');
 const postgres = require('./postgres');
 
-const generateUUID = require('../utils/generate_uuid');
+const generateUUID = require('../utils/generate-uuid');
 
 
 module.exports = {
@@ -33,9 +33,10 @@ module.exports = {
       draws: 0,
       loses: 0,
     };
+    const userNotifications = [];
 
     await postgres.user.create(user);
-    await mongodb.user.create(user, userInventoryData, userSocialData);
+    await mongodb.user.create(user, userInventoryData, userSocialData, userNotifications);
     await neo4j.user.create(user, userGameData);
 
   },
@@ -51,6 +52,13 @@ module.exports = {
   findByUsername: async function (username) {
 
     return await postgres.user.findByUsername(username);
+
+  },
+
+
+  findByID: async function (userID) {
+
+    return await postgres.user.findByID(userID);
 
   },
 

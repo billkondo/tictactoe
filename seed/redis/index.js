@@ -1,11 +1,14 @@
-const addInvite = require('../../domain/redis/add_invite');
-const addOngoingMatch = require('../../domain/redis/add_ongoing_match');
+const match = require('../../domain/redis/match');
 
-const seed = async ({ ongoingMatches, invites }) => {
+
+const seed = async ({ ongoingMatches }) => {
+
   console.info('Seed Redis');
 
-  await Promise.all(ongoingMatches.map(addOngoingMatch));
-  await Promise.all(invites.map(addInvite));
+  console.info('  Seed Ongoing Matches');
+  await Promise.all(ongoingMatches.map(match.add));
+
 };
+
 
 module.exports = seed;

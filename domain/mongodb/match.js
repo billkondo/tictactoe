@@ -3,6 +3,13 @@ const mongodb = require("../../databases/mongodb");
 
 module.exports = {
 
+  
+  add: async function (match) {
+
+    await mongodb.matches().insertOne(match);
+
+  },
+
 
   userMatches: async function (user) {
 
@@ -25,6 +32,18 @@ module.exports = {
       matchID,
     });
     
+  },
+
+
+  pushInvite: async function (invite) {
+
+    const { userID } = invite.receiver;
+    
+    await mongodb.users().updateOne(
+      { userID }, 
+      { "$push": { notifications: invite } },
+    );
+
   },
 
 

@@ -1,4 +1,4 @@
-const mongodb = require('../../databases/mongodb');
+const mongodb = require('../../domain/mongodb');
 
 
 module.exports = async function ({
@@ -11,23 +11,11 @@ module.exports = async function ({
   console.info('Seed MongoDB');
 
   console.info('  Seed Users');
-  const usersModels = [];
   for (let i = 0; i < users.length; i++) {
-    const userModel = {
-      userID: users[i].userID,
-      username: users[i].username,
-    };
-
-    userModel.banner = usersInventoryData[i].banner;
-    userModel.inventory = usersInventoryData[i].inventory;
-    userModel.followersCount = usersSocialData[i].followersCount;
-    userModel.followingCount = usersSocialData[i].followingCount;
-
-    usersModels.push(userModel);
+    await mongodb.user.create(users[i], usersInventoryData[i], usersSocialData[i], []);
   }
-  await mongodb.users().insertMany(usersModels);
-
+  
   console.info('  Seed Matches');
-  await mongodb.matches().insertMany(matches);
+  await Promise.all(matches.map(mongodb.match.add));
 
 };

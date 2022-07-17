@@ -40,6 +40,21 @@ module.exports = {
   },
 
 
+  findByID: async function (userID) {
+
+    const users = await postgres`
+      SELECT * FROM usuario
+      WHERE user_id=${userID}
+    `;
+
+    if (users.length > 0)
+      return this.mapUser(users[0]);
+
+    return null;
+
+  },
+
+
   searchByUsername: async function (username, limit=5) {
 
     const users = await postgres`

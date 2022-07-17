@@ -47,7 +47,11 @@ parasails.registerPage('invite', {
 
     },
 
-    submittedForm: function () {
+    submittedForm: function ({match}) {
+
+      const { matchID } = match;
+
+      window.location = `/match/${matchID}`;
 
     },
 

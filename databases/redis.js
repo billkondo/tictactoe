@@ -1,27 +1,19 @@
 const { createClient } = require('redis');
 
-class Redis {
-  URL = 'redis://@localhost:6379';
 
-  constructor() {
-    this.client = createClient({ url: this.URL });
-  }
+const URL = 'redis://@localhost:6379';
 
-  async connect() {
-    await this.client.connect();
-  }
 
-  matchKey(match) {
-    const { matchID } = match;
+const redis = createClient({ url: URL });
 
-    return `MATCH:${matchID}`;
-  }
 
-  inviteKey(invite) {
-    const { senderID, receiverID } = invite;
+redis.matchKey = function (match) {
 
-    return `INVITE:${senderID}:${receiverID}`;
-  }
+  const { matchID } = match;
+
+  return `MATCH:${matchID}`;
+
 }
 
-module.exports = Redis;
+
+module.exports = redis;

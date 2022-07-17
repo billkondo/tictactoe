@@ -3,7 +3,7 @@ const seedNeo4j = require('./seed/neo4j');
 const seedRedis = require('./seed/redis');
 const mongodb = require('./databases/mongodb');
 const neo4j = require('./databases/neo4j');
-const Redis = require('./databases/redis');
+const redis = require('./databases/redis');
 const postgres = require('./databases/postgres');
 const seedUser = require('./seed/users/seed_user');
 const seedPostgres = require('./seed/postgres');
@@ -40,9 +40,8 @@ const runSeed = async () => {
   await neo4j.session().run('MATCH (n) DETACH DELETE n');
 
   console.info('Clear Redis');
-  const redis = new Redis();
   await redis.connect();
-  await redis.client.flushAll();
+  await redis.flushAll();
 
   const {
     USERS_COUNT,
@@ -91,7 +90,6 @@ const runSeed = async () => {
     users,
     usersGameData
   );
-  const invites = seedInvites(INVITES_COUNT, users);
 
   console.info('Seed followings');
   const followings = seedFollowings(FOLLOWINGS_COUNT, users, usersSocialData);
@@ -99,8 +97,11 @@ const runSeed = async () => {
   await seedPostgres({ users, stores, coins, items, storesItems, matchCoinsWallets, tournmentCoinsWallets });
   await seedMongoDB({ users, usersInventoryData, usersSocialData, matches });
   await seedNeo4j({ users, matches, usersGameData, followings });
-  await seedRedis({ ongoingMatches, invites });
-
+  await seedRedis({ ongoingMatches });
+  
+  console.info('Seed invites');
+  await seedInvites(INVITES_COUNT, users);
+  
 };
 
 

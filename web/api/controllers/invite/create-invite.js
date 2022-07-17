@@ -38,16 +38,47 @@ module.exports = {
 
   exits: {
 
+    userDoesNotExist: {
+      description: 'There is not user with id equals `userID`.'
+    },
+
+    inviteToYourself: {
+      description: 'Can\'t send invite to yourself.'
+    },
+
   },
 
 
   fn: async function ({secondsPerSide, increment, pieces, userID}) {
 
-    console.log(secondsPerSide, increment, pieces, userID);
+    const me = this.req.me;
+    const otherUser = await sails.appDomain.user.findByID(userID);
 
-    return;
+    if (!otherUser) {
+      throw 'userDoesNotExist';
+    }
 
-  }
+    if (me.userID === otherUser.userID) {
+      throw 'inviteToYourself';
+    }
+
+    const timeFormat = {
+      limit: secondsPerSide,
+      increment,
+    };
+    const { match, invite } = await sails.appDomain.match.createInvite({
+      timeFormat,
+      sender: me,
+      receiver: otherUser,
+      senderPieces: pieces,
+    });
+
+    return {
+      match,
+      invite,
+    };
+
+  },
 
 
 };

@@ -5,7 +5,7 @@
       <div class="col-6">
         <h4 class="text-center mb-5">Play with a friend</h4>
 
-        <ajax-form action="createInvite" :syncing.sync="syncing" :form-data="formData" :form-rules="formRules" :form-errors.sync="formErrors" @submitted="submittedForm()">
+        <ajax-form action="createInvite" :syncing.sync="syncing" :form-data="formData" :form-rules="formRules" :form-errors.sync="formErrors" @submitted="submittedForm">
           <div class="form-group">
             <label for="seconds-per-side">Seconds per side: <b>{{ formData.secondsPerSide }}</b> </label>
             <input type="range" class="form-control-range" id="seconds-per-side" min="5" max="15" value="10" v-model="formData.secondsPerSide">
