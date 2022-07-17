@@ -8,9 +8,18 @@ parasails.registerPage('invite', {
       secondsPerSide: 10,
       increment: 3,
       pieces: 'random',
+      userID: '',
+    },
+
+    formErrors: {},
+
+    formRules: {
+      userID: { required: true },
     },
 
     syncing: false,
+
+    user: null,
 
   },
 
@@ -30,15 +39,30 @@ parasails.registerPage('invite', {
   methods: {
 
     choosePieces: function (pieces) {
+
       this.formData = {
         ...this.formData,
         pieces,
       };
+
     },
 
     submittedForm: function () {
 
     },
 
-  }
+    selectedUser: function (user) {
+
+      const { userID } = user;
+
+      this.user = user;
+      this.formData = {
+        ...this.formData,
+        userID,
+      };
+
+    },
+
+  },
+
 });

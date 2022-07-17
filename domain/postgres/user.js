@@ -40,6 +40,19 @@ module.exports = {
   },
 
 
+  searchByUsername: async function (username, limit=5) {
+
+    const users = await postgres`
+      SELECT * FROM usuario
+      WHERE LOWER(username) LIKE LOWER(${'%' + username + '%'})
+      LIMIT ${limit}
+    `
+
+    return users.map(this.mapUser);
+
+  },
+
+
   mapUser: function (user) {
 
     const { user_id, nome, username, email, data_de_cadastro } = user;

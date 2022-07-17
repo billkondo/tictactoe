@@ -67,5 +67,12 @@ module.exports = {
 
   },
 
+
+  searchByUsername: async function (username) {
+
+    return postgres.user.searchByUsername(username, 5);
+
+  },
+
   
 };

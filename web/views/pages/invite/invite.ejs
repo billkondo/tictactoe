@@ -5,7 +5,7 @@
       <div class="col-6">
         <h4 class="text-center mb-5">Play with a friend</h4>
 
-        <ajax-form action="createInvite" :syncing.sync="syncing" :form-data="formData" @submitted="submittedForm()">
+        <ajax-form action="createInvite" :syncing.sync="syncing" :form-data="formData" :form-rules="formRules" :form-errors.sync="formErrors" @submitted="submittedForm()">
           <div class="form-group">
             <label for="seconds-per-side">Seconds per side: <b>{{ formData.secondsPerSide }}</b> </label>
             <input type="range" class="form-control-range" id="seconds-per-side" min="5" max="15" value="10" v-model="formData.secondsPerSide">
@@ -16,7 +16,13 @@
             <input type="range" class="form-control-range" id="increment" min="0" max="6" value="3" v-model="formData.increment">
           </div>
 
-          <div class="row mt-5 justify-content-center">
+          <div class="row">
+            <div class="col">
+              <search-user @selected-user="selectedUser" :error="formErrors.userID" :user="user" />
+            </div>
+          </div>
+
+          <div class="row mt-4 justify-content-center">
             <p class="text-center">Choose your pieces</p>
           </div>
 

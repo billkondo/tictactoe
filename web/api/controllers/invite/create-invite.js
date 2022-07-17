@@ -27,6 +27,12 @@ module.exports = {
       required: true,
     },
 
+    userID: {
+      description: 'User receiving the invite.',
+      type: 'string',
+      required: true,
+    },
+
   },
 
 
@@ -35,9 +41,9 @@ module.exports = {
   },
 
 
-  fn: async function ({secondsPerSide, increment, pieces}) {
+  fn: async function ({secondsPerSide, increment, pieces, userID}) {
 
-    console.log(secondsPerSide, increment, pieces);
+    console.log(secondsPerSide, increment, pieces, userID);
 
     return;
 
