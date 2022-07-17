@@ -30,11 +30,11 @@ services:
       - ./db_data/neo4j/plugins:/plugins 
       - ./db_data/neo4j/conf/:/var/lib/neo4j/conf
   redis:
-    image: redis:alpine
+    image: redis/redis-stack
     ports: 
       - 6379:6379
     volumes: 
-      - ./db_data/redis:/data
+      - ./db_data/redis:/data:rw
   mongodb:
     image: mongo:latest
     ports:
