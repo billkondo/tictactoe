@@ -1,4 +1,11 @@
 <div id="edit-profile" v-cloak>
+
+  <% if (me) { %>
+    <navbar :me="me" :user-data="userData"></navbar>
+  <% } else { %>
+    <navbar></navbar>
+  <% } %>
+
   <account-notification-banner></account-notification-banner>
   <div class="container pt-5 pb-5">
     <h1>Update personal info</h1>

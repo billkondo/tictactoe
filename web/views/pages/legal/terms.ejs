@@ -1,4 +1,11 @@
 <div id="terms">
+
+  <% if (me) { %>
+    <navbar :me="me" :user-data="userData"></navbar>
+  <% } else { %>
+    <navbar></navbar>
+  <% } %>
+
   <div class="container pt-5 pb-5">
     <h1>Terms of service</h1>
     <hr/>

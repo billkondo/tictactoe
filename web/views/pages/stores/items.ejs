@@ -1,5 +1,11 @@
 <div id="items" v-cloak>
 
+  <% if (me) { %>
+    <navbar :me="me" :user-data="userData"></navbar>
+  <% } else { %>
+    <navbar></navbar>
+  <% } %>
+
   <div class="container pt-5 pb-5">
 
     <div class="row pb-5">

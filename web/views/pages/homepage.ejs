@@ -1,4 +1,11 @@
 <div id="homepage" v-cloak>
+
+  <% if (me) { %>
+    <navbar :me="me" :user-data="userData"></navbar>
+  <% } else { %>
+    <navbar></navbar>
+  <% } %>
+
   <div style="padding-top: 100px; padding-bottom: 25px; color: #14acc2;" class="d-flex flex-column justify-content-center position-relative" purpose="full-page-hero">
     <div class="container text-center">
       <div style="width: 220px; height: 170px;" class="mx-auto position-relative">

@@ -1,4 +1,11 @@
 <div id="signup" v-cloak>
+
+  <% if (me) { %>
+    <navbar :me="me" :user-data="userData"></navbar>
+  <% } else { %>
+    <navbar></navbar>
+  <% } %>
+
   <div class="container-fluid pt-5 pb-5" v-if="!cloudSuccess">
     <h1 class="text-center">Create an account</h1>
     <div style="max-width: 450px;" class="mx-auto" >

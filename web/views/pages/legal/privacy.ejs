@@ -1,4 +1,11 @@
 <div id="privacy">
+
+  <% if (me) { %>
+    <navbar :me="me" :user-data="userData"></navbar>
+  <% } else { %>
+    <navbar></navbar>
+  <% } %>
+
   <div class="container pt-5 pb-5">
     <h1>NEW_APP_COMPANY_NAME privacy policy</h1>
     <hr/>

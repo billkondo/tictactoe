@@ -1,4 +1,11 @@
-<div id="404">
+<div id="not-found" v-cloak>
+
+  <% if (me) { %>
+    <navbar :me="me" :user-data="userData"></navbar>
+  <% } else { %>
+    <navbar></navbar>
+  <% } %>
+
   <div style="max-width: 650px;" class="container text-center pt-5 pb-5">
     <h1 class="display-1 mb-3">404</h1>
     <hr/>
@@ -8,3 +15,4 @@
     </div>
   </div>
 </div>
+<%- /* Expose locals as `window.SAILS_LOCALS` :: */ exposeLocalsToBrowser() %>

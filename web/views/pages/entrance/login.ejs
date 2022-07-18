@@ -1,4 +1,11 @@
 <div id="login" v-cloak>
+
+  <% if (me) { %>
+    <navbar :me="me" :user-data="userData"></navbar>
+  <% } else { %>
+    <navbar></navbar>
+  <% } %>
+
   <div class="container-fluid pt-5 pb-5">
     <h1 class="text-center">Sign in to your account</h1>
     <div style="max-width: 450px;" class="mx-auto">
