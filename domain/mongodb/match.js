@@ -35,16 +35,4 @@ module.exports = {
   },
 
 
-  pushInvite: async function (invite) {
-
-    const { userID } = invite.receiver;
-    
-    await mongodb.users().updateOne(
-      { userID }, 
-      { "$push": { notifications: invite } },
-    );
-
-  },
-
-
 }

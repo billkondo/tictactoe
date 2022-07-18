@@ -93,7 +93,7 @@ module.exports = {
     };
 
     await redis.match.add(match);
-    await mongodb.match.pushInvite(invite);
+    await mongodb.user.pushInvite(invite);
 
     return { match, invite };
 
