@@ -12,7 +12,14 @@ parasails.registerComponent('navbar', {
   //  ╩╝╚╝╩ ╩ ╩╩ ╩╩═╝  ╚═╝ ╩ ╩ ╩ ╩ ╚═╝
   data: function () {
 
-    return {};
+    let notificationsCount = 0;
+    if (this.userData) {
+      notificationsCount = this.userData.notifications.length;
+    }
+
+    return {
+      notificationsCount,
+    };
 
   },
 
@@ -31,9 +38,10 @@ parasails.registerComponent('navbar', {
           <div class="nav-item dropdown">
             <a class="nav-link" data-toggle="dropdown">
               <i class="fa fa-bell"></i>
+              <span v-if="notificationsCount > 0" class="badge badge-primary text-white">{{ notificationsCount }}</span>
             </a>
             <div style="left: auto; right: 0; min-width: 25rem; padding: 0;" class="dropdown-menu">
-              <div v-if="!userData.notifications.length" class="container p-3">
+              <div v-if="!notificationsCount" class="container p-3">
                 <div class="row justify-content-center align-items-center">
                   <i class="fa fa-info-circle mr-2"></i> No notifications
                 </div>
