@@ -88,7 +88,7 @@ module.exports = {
     const userData = await mongodb.user.find(username);
     
     // Sort notifications by sentTime in decreasing order
-    userData.notifications.sort(function (a, b) {
+    userData?.notifications?.sort(function (a, b) {
       return b.sentTime - a.sentTime;
     });
 
