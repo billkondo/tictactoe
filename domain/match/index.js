@@ -117,6 +117,7 @@ module.exports = {
 
     await redis.match.add(match);
     await mongodb.user.pushNotification(receiver, invite);
+    await this.assignedToMatch({user: sender, match});
 
     return { match, invite };
 
@@ -131,14 +132,22 @@ module.exports = {
       return;
     }
 
-    const notification = this.buildOngoingMatchNotification({ match, user });
-
     await mongodb.user.popNotification(user, { matchID, type: INVITE });
-    await mongodb.user.pushNotification(user, notification);
+    await this.assignedToMatch({user, match});
 
     return notification;
 
   },
+
+
+  assignedToMatch: async function ({user, match}) {
+
+    const notification = this.buildOngoingMatchNotification({ match, user });
+    await mongodb.user.pushNotification(user, notification);
+
+    return notification;
+
+  }
 
 
 };
