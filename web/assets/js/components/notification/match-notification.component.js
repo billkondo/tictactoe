@@ -1,4 +1,4 @@
-parasails.registerComponent('invite-notification', {
+parasails.registerComponent('match-notification', {
   //  ╔═╗╦═╗╔═╗╔═╗╔═╗
   //  ╠═╝╠╦╝║ ║╠═╝╚═╗
   //  ╩  ╩╚═╚═╝╩  ╚═╝
@@ -11,10 +11,11 @@ parasails.registerComponent('invite-notification', {
   //  ╩╝╚╝╩ ╩ ╩╩ ╩╩═╝  ╚═╝ ╩ ╩ ╩ ╩ ╚═╝
   data: function () {
 
-    const { matchID } = this.notification;
+    const { opponent, url } = this.notification;
 
     return {
-      matchID,
+      opponent,
+      url,
     };
 
   },
@@ -23,14 +24,10 @@ parasails.registerComponent('invite-notification', {
   //  ╠═╣ ║ ║║║║
   //  ╩ ╩ ╩ ╩ ╩╩═╝
   template: `
-    <div class="invite-notification">
-      <div>
-        <b class="mr-1">{{ notification.sender.username }}</b><span>invited you for a match</span>
-      </div>
-
-      <div class="mt-2 d-flex justify-content-start">
-        <button class="btn btn-primary" @click="accept"><i class="fa fa-check"></i></button>
-        <button class="btn btn-danger ml-2"><i class="fa fa-times"></i></button>
+    <div class="match-notification">
+      <div style="position: relative;">
+        <span>You are in match against</span><b class="ml-1">{{ opponent.username }}</b>
+        <a :href="url" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0;"></a>
       </div>
     </div>
   `,

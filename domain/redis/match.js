@@ -3,11 +3,27 @@ const redis = require('../../databases/redis');
 
 module.exports = {
 
+  matchKey: function (matchID) {
+    
+    return `MATCH:${matchID}`;
+
+  },
+
+
   add: async function (match) {
 
-    const matchKey = redis.matchKey(match);
+    const key = this.key(match.matchID)
 
-    await redis.json.set(matchKey, '.', match);
+    await redis.json.set(key, '.', match);
+
+  },
+
+
+  find: async function (matchID) {
+
+    const key = this.matchKey(matchID);
+
+    return await redis.json.get(key);
 
   },
 

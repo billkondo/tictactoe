@@ -3,7 +3,7 @@ const redis = require('../redis');
 
 const { generateUUID, tossACoin } = require('../../utils');
 const { WAITING_FOR_START } = require('../match_result');
-const { INVITE } = require('../notification');
+const { INVITE, ONGOING_MATCH } = require('../notification');
 
 const matchGridFromPlays = require('./match_grid_from_plays');
 const matchWinner = require('./match_winner');
@@ -11,8 +11,15 @@ const matchWinner = require('./match_winner');
 
 module.exports = {
 
+
+  matchURL: function (matchID) {
+
+    return `/match/${matchID}`;
+
+  },
+
   
-  create: function ({timeFormat, player1, player2}) {
+  build: function ({timeFormat, player1, player2, fromInvite=false}) {
 
     const matchID = generateUUID();
     const now = new Date();
@@ -33,6 +40,22 @@ module.exports = {
       },
       result: WAITING_FOR_START,
       plays: [],
+      fromInvite,
+    }
+
+  },
+
+
+  buildOngoingMatchNotification: function ({ match, user }) {
+
+    const { matchID, player1, player2 } = match;
+    const opponent = player1.userID === user.userID ? player2 : player1;
+
+    return {
+      opponent,
+      url: this.matchURL(matchID),
+      sentTime: Date.now(),
+      type: ONGOING_MATCH,
     }
 
   },
@@ -76,7 +99,7 @@ module.exports = {
 
     const player1 = (senderPieces === 'O' || (senderPieces === 'random' && tossACoin())) ? sender : receiver;
     const player2 = (sender === player1) ? receiver : sender;
-    const match = this.create({timeFormat, player1, player2});
+    const match = this.build({timeFormat, player1, player2, fromInvite: true});
     const invite = {
       matchID: match.matchID,
       sender: {
@@ -93,9 +116,27 @@ module.exports = {
     };
 
     await redis.match.add(match);
-    await mongodb.user.pushInvite(invite);
+    await mongodb.user.pushNotification(receiver, invite);
 
     return { match, invite };
+
+  },
+
+
+  acceptInvite: async function ({user, matchID}) {
+
+    const match = await redis.match.find(matchID);
+
+    if (!match) {
+      return;
+    }
+
+    const notification = this.buildOngoingMatchNotification({ match, user });
+
+    await mongodb.user.popNotification(user, { matchID, type: INVITE });
+    await mongodb.user.pushNotification(user, notification);
+
+    return notification;
 
   },
 

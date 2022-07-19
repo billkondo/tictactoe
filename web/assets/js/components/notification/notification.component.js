@@ -11,7 +11,9 @@ parasails.registerComponent('notification', {
   //  ╩╝╚╝╩ ╩ ╩╩ ╩╩═╝  ╚═╝ ╩ ╩ ╩ ╩ ╚═╝
   data: function () {
 
-    return {};
+    return {
+      type: this.notification.type,
+    };
 
   },
 
@@ -20,7 +22,8 @@ parasails.registerComponent('notification', {
   //  ╩ ╩ ╩ ╩ ╩╩═╝
   template: `
     <div class="notification">
-      <invite-notification v-if="notification.type === 'INVITE'"></invite-notification>
+      <invite-notification v-if="type === 'INVITE'        " :notification="notification"></invite-notification>
+      <match-notification  v-if="type === 'ONGOING_MATCH' " :notification="notification"></match-notification>
     </div>
   `,
 

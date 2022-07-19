@@ -73,6 +73,7 @@ module.exports.routes = {
   'POST  /api/v1/observe-my-session':                 { action: 'observe-my-session', hasSocketFeatures: true },
 
   'POST /api/v1/invite/create-invite':                { action: 'invite/create-invite' },
+  'POST /api/v1/invite/accept-invite':                { action: 'invite/accept-invite' },
 
   'POST /api/v1/user/search-user':                    { action: 'user/search-user' },
 

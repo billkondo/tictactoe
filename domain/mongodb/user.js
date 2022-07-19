@@ -36,16 +36,31 @@ module.exports = {
   },
 
 
-  pushInvite: async function (invite) {
+  pushNotification: async function (user, notification) {
 
-    const { userID } = invite.receiver;
+    const { userID } = user;
+
+    console.log(userID, notification);
     
     await mongodb.users().updateOne(
       { userID }, 
-      { "$push": { notifications: invite } },
+      { "$push": { notifications: notification } },
     );
 
   },
 
+
+  popNotification: async function (user, where) {
+
+    const { userID } = user;
+
+    console.log(userID, where);
+
+    await mongodb.users().updateOne(
+      { userID },
+      { "$pull": { notifications: where } }
+    );
+
+  }
 
 };

@@ -48,7 +48,7 @@ parasails.registerComponent('navbar', {
               </div>
               <div v-else class="list-group" style="height: 100%;">
                 <div class="list-group-item" style="width: 100%;" v-for="notification in userData.notifications">
-                  <invite-notification :notification="notification"></invite-notification>
+                  <notification :notification="notification"></notification>
                 </div>
               </div>
             </div>
