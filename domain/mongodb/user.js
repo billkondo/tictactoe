@@ -39,8 +39,6 @@ module.exports = {
   pushNotification: async function (user, notification) {
 
     const { userID } = user;
-
-    console.log(userID, notification);
     
     await mongodb.users().updateOne(
       { userID }, 
@@ -53,8 +51,6 @@ module.exports = {
   popNotification: async function (user, where) {
 
     const { userID } = user;
-
-    console.log(userID, where);
 
     await mongodb.users().updateOne(
       { userID },

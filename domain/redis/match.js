@@ -12,7 +12,7 @@ module.exports = {
 
   add: async function (match) {
 
-    const key = this.key(match.matchID)
+    const key = this.matchKey(match.matchID)
 
     await redis.json.set(key, '.', match);
 
