@@ -12,13 +12,9 @@ parasails.registerComponent('navbar', {
   //  ╩╝╚╝╩ ╩ ╩╩ ╩╩═╝  ╚═╝ ╩ ╩ ╩ ╩ ╚═╝
   data: function () {
 
-    let notificationsCount = 0;
-    if (this.userData) {
-      notificationsCount = this.userData.notifications.length;
-    }
-
     return {
-      notificationsCount,
+      notificationsCount: 0,
+      notifications: [],
     };
 
   },
@@ -47,7 +43,7 @@ parasails.registerComponent('navbar', {
                 </div>
               </div>
               <div v-else class="list-group" style="height: 100%;">
-                <div class="list-group-item" style="width: 100%;" v-for="notification in userData.notifications">
+                <div class="list-group-item" style="width: 100%;" v-for="notification in notifications" :key="notification.notificationID">
                   <notification :notification="notification"></notification>
                 </div>
               </div>
@@ -91,7 +87,18 @@ parasails.registerComponent('navbar', {
     //…
   },
   mounted: async function() {
-    //…
+
+    if (this.me) {
+      this.updateState(this.userData);
+
+      await Cloud.observeUserData();
+
+      Cloud.on('user-data-changed', (data) => {
+        this.updateState(data);
+      });
+
+    }
+
   },
   beforeDestroy: function() {
     //…
@@ -100,6 +107,21 @@ parasails.registerComponent('navbar', {
   //  ╦╔╗╔╔╦╗╔═╗╦═╗╔═╗╔═╗╔╦╗╦╔═╗╔╗╔╔═╗
   //  ║║║║ ║ ║╣ ╠╦╝╠═╣║   ║ ║║ ║║║║╚═╗
   //  ╩╝╚╝ ╩ ╚═╝╩╚═╩ ╩╚═╝ ╩ ╩╚═╝╝╚╝╚═╝
-  methods: {},
+  methods: {
+
+    updateState: function (data) {
+
+      if (!data || !data.notifications.length) {
+        this.notificationsCount = 0;
+        this.notifications = [];
+      } else {
+        this.notificationsCount = data.notifications.length;
+        this.notifications = data.notifications;
+      }
+
+    },
+
+  },
+
 
 });

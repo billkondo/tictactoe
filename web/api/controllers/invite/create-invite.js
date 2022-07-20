@@ -73,6 +73,10 @@ module.exports = {
       senderPieces: pieces,
     });
 
+    if (sails.hooks.sockets) {
+      await sails.helpers.broadcastUserDataChange(otherUser);
+    }
+
     return {
       match,
       invite,

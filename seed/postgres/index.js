@@ -40,7 +40,7 @@ module.exports = async function ({
     }
   }
 
-  console.info('  Seed wallets');
+  console.info('  Seed Wallets');
   for (let i = 0; i < users.length; i++) {
     const user = users[i];
     const matchCoinsWallet = matchCoinsWallets[i];

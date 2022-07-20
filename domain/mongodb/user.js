@@ -48,13 +48,13 @@ module.exports = {
   },
 
 
-  popNotification: async function (user, where) {
+  popNotification: async function (user, notificationID) {
 
     const { userID } = user;
 
     await mongodb.users().updateOne(
       { userID },
-      { "$pull": { notifications: where } }
+      { "$pull": { notifications: { notificationID } } }
     );
 
   }

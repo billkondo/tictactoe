@@ -27,12 +27,24 @@ module.exports = function defineCustomHook(sails) {
 
       sails.appUtils = appUtils;
 
-
       // Initialize databases connnections
       var redisPath = path.join(sails.config.appPath, '..', 'databases', 'redis');
       var redis = require(redisPath);
 
       await redis.connect();
+
+      // Socket rooms names
+      sails.rooms = {
+
+        userData: function (user) {
+
+          const { userID } = user;
+
+          return `USER_DATA:${userID}`;
+
+        },
+
+      };
 
 
       // Check Stripe/Sendgrid configuration (for billing and emails).

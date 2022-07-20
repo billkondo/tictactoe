@@ -70,11 +70,12 @@ module.exports.routes = {
   'POST  /api/v1/entrance/send-password-recovery-email': { action: 'entrance/send-password-recovery-email' },
   'POST  /api/v1/entrance/update-password-and-login':    { action: 'entrance/update-password-and-login' },
   'POST  /api/v1/deliver-contact-form-message':          { action: 'deliver-contact-form-message' },
-  'POST  /api/v1/observe-my-session':                 { action: 'observe-my-session', hasSocketFeatures: true },
 
   'POST /api/v1/invite/create-invite':                { action: 'invite/create-invite' },
   'POST /api/v1/invite/accept-invite':                { action: 'invite/accept-invite' },
 
   'POST /api/v1/user/search-user':                    { action: 'user/search-user' },
 
+  'POST  /api/v1/observe-my-session':                 { action: 'observe-my-session', hasSocketFeatures: true },
+  'POST /api/v1/observe-user-data':                   { action: 'observe-user-data',  hasSocketFeatures: true },
 };

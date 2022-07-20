@@ -1,9 +1,9 @@
 const mongodb = require('../mongodb');
 const redis = require('../redis');
 
+const Notification = require('../notification');
 const { generateUUID, tossACoin } = require('../../utils');
 const { WAITING_FOR_START } = require('../match_result');
-const { INVITE, ONGOING_MATCH } = require('../notification');
 
 const matchGridFromPlays = require('./match_grid_from_plays');
 const matchWinner = require('./match_winner');
@@ -19,7 +19,7 @@ module.exports = {
   },
 
   
-  build: function ({timeFormat, player1, player2, fromInvite=false}) {
+  buildMatch: function ({timeFormat, player1, player2, fromInvite=false}) {
 
     const matchID = generateUUID();
     const now = new Date();
@@ -49,14 +49,36 @@ module.exports = {
   buildOngoingMatchNotification: function ({ match, user }) {
 
     const { matchID, player1, player2 } = match;
-    const opponent = player1.userID === user.userID ? player2 : player1;
+    const opponent = player1.username === user.username ? player2 : player1;
 
     return {
       opponent,
       url: this.matchURL(matchID),
       sentTime: Date.now(),
-      type: ONGOING_MATCH,
+      type: Notification.ONGOING_MATCH,
+      notificationID: Notification.ongoingMatchNotificationID(match),
     }
+
+  },
+
+
+  buildInviteNotification: function ({match, sender, receiver, timeFormat, sentTime}) {
+    
+    return {
+      matchID: match.matchID,
+      sender: {
+        username: sender.username,
+        userID: sender.userID,
+      },
+      receiver: {
+        username: receiver.username,
+        userID: receiver.userID,
+      },
+      timeFormat,
+      sentTime,
+      type: Notification.INVITE,
+      notificationID: Notification.inviteNotificationID(match),
+    };
 
   },
 
@@ -99,21 +121,8 @@ module.exports = {
 
     const player1 = (senderPieces === 'O' || (senderPieces === 'random' && tossACoin())) ? sender : receiver;
     const player2 = (sender === player1) ? receiver : sender;
-    const match = this.build({timeFormat, player1, player2, fromInvite: true});
-    const invite = {
-      matchID: match.matchID,
-      sender: {
-        username: sender.username,
-        userID: sender.userID,
-      },
-      receiver: {
-        username: receiver.username,
-        userID: receiver.userID,
-      },
-      timeFormat,
-      sentTime,
-      type: INVITE,
-    };
+    const match = this.buildMatch({timeFormat, player1, player2, fromInvite: true});
+    const invite = this.buildInviteNotification({match, sender, receiver, sentTime, timeFormat});
 
     await redis.match.add(match);
     await mongodb.user.pushNotification(receiver, invite);
@@ -132,8 +141,8 @@ module.exports = {
       return;
     }
 
-    await mongodb.user.popNotification(user, { matchID, type: INVITE });
-    await this.assignedToMatch({user, match});
+    await mongodb.user.popNotification(user, Notification.inviteNotificationID(match));
+    const notification = await this.assignedToMatch({user, match});
 
     return notification;
 
@@ -147,7 +156,7 @@ module.exports = {
 
     return notification;
 
-  }
+  },
 
 
 };
