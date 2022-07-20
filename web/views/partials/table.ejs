@@ -1,0 +1,14 @@
+<div>
+    <div class="row">
+        <% columnNames.forEach(function(column){ %>
+            <div class="col" ><%= column %></div>
+        <% }); %>
+    </div>  
+    <% lines.forEach(function(line){ %>
+        <div class="row">
+        <% line.forEach(function(item) { %>
+            <div class="col"><%= item %></div>
+        <% }); %>
+        </div>
+    <% }); %>
+</div>

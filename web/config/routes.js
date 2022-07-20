@@ -43,6 +43,12 @@ module.exports.routes = {
 
   'GET /invite':            { action: 'invite/view-invite' },
 
+  'GET /query':            { action: 'neo4j/view-query' },
+  'GET /query2':            { action: 'neo4j/view-query2' },
+  'GET /query3':            { action: 'neo4j/view-query3' },
+  'GET /query4':            { action: 'neo4j/view-query4' },
+  'GET /query5':            { action: 'neo4j/view-query5' },
+
   //  ╔╦╗╦╔═╗╔═╗  ╦═╗╔═╗╔╦╗╦╦═╗╔═╗╔═╗╔╦╗╔═╗   ┬   ╔╦╗╔═╗╦ ╦╔╗╔╦  ╔═╗╔═╗╔╦╗╔═╗
   //  ║║║║╚═╗║    ╠╦╝║╣  ║║║╠╦╝║╣ ║   ║ ╚═╗  ┌┼─   ║║║ ║║║║║║║║  ║ ║╠═╣ ║║╚═╗
   //  ╩ ╩╩╚═╝╚═╝  ╩╚═╚═╝═╩╝╩╩╚═╚═╝╚═╝ ╩ ╚═╝  └┘   ═╩╝╚═╝╚╩╝╝╚╝╩═╝╚═╝╩ ╩═╩╝╚═╝
