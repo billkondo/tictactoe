@@ -96,6 +96,10 @@ module.exports = {
 
     const match = await mongodb.match.findMatch(matchID);
 
+    if (!match) {
+      return null;
+    }
+
     return this.addGridAttribute(match);
 
   },
@@ -105,8 +109,9 @@ module.exports = {
 
     const match = await redis.match.find(matchID);
 
-    if (!match)
+    if (!match) {
       return null;
+    }
 
     return this.addGridAttribute(match);
 

@@ -11,7 +11,11 @@ module.exports = {
 
     success: {
       viewTemplatePath: 'pages/match/match'
-    }
+    },
+
+    notFound: {
+      viewTemplatePath: '404',
+    },
 
   },
 
@@ -28,7 +32,7 @@ module.exports = {
     }
 
     if (!match) {
-      return this.res.notFound();
+      throw 'notFound';
     }
 
     const { player1, player2 } = match;
