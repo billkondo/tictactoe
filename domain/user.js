@@ -8,6 +8,22 @@ const generateUUID = require('../utils/generate-uuid');
 module.exports = {
 
 
+  buildData: function ({ userID, username, userInventoryData, userGameData, userNotifications }) {
+
+    const { rating } = userGameData;
+    const { banner } = userInventoryData;
+
+    return {
+      userID,
+      username,
+      banner,
+      rating,
+      notifications: userNotifications,
+    };
+
+  },
+
+
   create: async function ({emailAddress, fullName, username}) {
 
     const userID = generateUUID();
@@ -22,10 +38,6 @@ module.exports = {
       banner: null,
       inventory: [],
     };
-    const userSocialData = {
-      followersCount: 0,
-      followingCount: 0,
-    };
     const userGameData = {
       rating: 500,
       matches: 0,
@@ -33,10 +45,16 @@ module.exports = {
       draws: 0,
       loses: 0,
     };
-    const userNotifications = [];
+    const userData = this.buildData({
+      userID,
+      username,
+      userInventoryData,
+      userGameData,
+      userNotifications: [],
+    });
 
     await postgres.user.create(user);
-    await mongodb.user.create(user, userInventoryData, userSocialData, userNotifications);
+    await mongodb.user.create(userData);
     await neo4j.user.create(user, userGameData);
 
   },
@@ -88,7 +106,7 @@ module.exports = {
     const userData = await mongodb.user.find(username);
     
     // Sort notifications by sentTime in decreasing order
-    userData?.notifications?.sort(function (a, b) {
+    userData.notifications.sort(function (a, b) {
       return b.sentTime - a.sentTime;
     });
 

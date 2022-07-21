@@ -1,6 +1,11 @@
 <div class="match-player-info">
   <span><%= player.username %></span>
   <span>(</span>
-  <span><%= player.rating %> <rating-change :rating-delta="<%= player.ratingDelta %>"/></span>
+  <span><%= player.rating %></span>
+  <% if (player.ratingDelta) { %>
+    <span>
+      <rating-change :rating-delta="<%= player.ratingDelta %>"/>
+    </span>
+  <% } %>
   <span>)</span>
 </div>

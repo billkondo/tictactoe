@@ -27,7 +27,7 @@ module.exports = {
       required: true,
     },
 
-    userID: {
+    username: {
       description: 'User receiving the invite.',
       type: 'string',
       required: true,
@@ -39,7 +39,7 @@ module.exports = {
   exits: {
 
     userDoesNotExist: {
-      description: 'There is not user with id equals `userID`.'
+      description: 'There is no user with `username`.',
     },
 
     inviteToYourself: {
@@ -49,10 +49,10 @@ module.exports = {
   },
 
 
-  fn: async function ({secondsPerSide, increment, pieces, userID}) {
+  fn: async function ({secondsPerSide, increment, pieces, username}) {
 
-    const me = this.req.user;
-    const otherUser = await sails.appDomain.user.findByID(userID);
+    const me = this.req.userData;
+    const otherUser = await sails.appDomain.user.data(username);
 
     if (!otherUser) {
       throw 'userDoesNotExist';

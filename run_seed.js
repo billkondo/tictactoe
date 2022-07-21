@@ -22,6 +22,7 @@ const officialStore = require('./domain/store/official_store');
 const { coins, MATCH_COIN, TOURNMENT_COIN } = require('./domain/store/coins');
 const seedStoreItems = require('./seed/items/seed_stores_items');
 const seedUsersWalletsForCoins = require('./seed/wallet/seed_users_wallets_for_coin');
+const user = require('./domain/user');
 
 
 const runSeed = async () => {
@@ -60,6 +61,19 @@ const runSeed = async () => {
   const usersInventoryData = [...Array(USERS_COUNT)].map(seedUserInventoryData);
   const usersSocialData = [...Array(USERS_COUNT)].map(seedUserSocialData);
 
+  const usersData = [];
+  for (let i = 0; i < users.length; i++) {
+    usersData.push(
+      user.buildData({
+        userID: users[i].userID,
+        userGameData: usersGameData[i],
+        userInventoryData: usersInventoryData[i],
+        username: users[i].username,
+        userNotifications: [],
+      })
+    );
+  }
+
   console.info('Seed users wallets');
   const matchCoinsWallets = seedUsersWalletsForCoins(users, MATCH_COIN);
   const tournmentCoinsWallets = seedUsersWalletsForCoins(users, TOURNMENT_COIN);
@@ -95,12 +109,12 @@ const runSeed = async () => {
   const followings = seedFollowings(FOLLOWINGS_COUNT, users, usersSocialData);
 
   await seedPostgres({ users, stores, coins, items, storesItems, matchCoinsWallets, tournmentCoinsWallets });
-  await seedMongoDB({ users, usersInventoryData, usersSocialData, matches });
+  await seedMongoDB({ matches, usersData });
   await seedNeo4j({ users, matches, usersGameData, followings });
   await seedRedis({ ongoingMatches });
   
-  console.info('Seed invites');
-  await seedInvites(INVITES_COUNT, users);
+  console.info('Seed Invites');
+  await seedInvites(INVITES_COUNT, usersData);
   
 };
 

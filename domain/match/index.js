@@ -101,6 +101,18 @@ module.exports = {
   },
 
 
+  findOngoingMatch: async function (matchID) {
+
+    const match = await redis.match.find(matchID);
+
+    if (!match)
+      return null;
+
+    return this.addGridAttribute(match);
+
+  },
+
+
   matchGridFromPlays,
 
 
