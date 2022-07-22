@@ -79,6 +79,7 @@ module.exports.routes = {
 
   'POST /api/v1/invite/create-invite':                { action: 'invite/create-invite' },
   'POST /api/v1/invite/accept-invite':                { action: 'invite/accept-invite' },
+  'POST /api/v1/stores/buy-item':                { action: 'stores/buy-item' },
 
   'POST /api/v1/user/search-user':                    { action: 'user/search-user' },
 

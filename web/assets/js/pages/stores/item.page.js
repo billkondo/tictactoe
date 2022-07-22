@@ -3,7 +3,18 @@ parasails.registerPage('item', {
   //  ║║║║║ ║ ║╠═╣║    ╚═╗ ║ ╠═╣ ║ ║╣
   //  ╩╝╚╝╩ ╩ ╩╩ ╩╩═╝  ╚═╝ ╩ ╩ ╩ ╩ ╚═╝
   data: {
-    //…
+    formData: {
+    },
+
+    formErrors: {},
+
+    formRules: {
+      // itemID: { required: true },
+    },
+
+    syncing: false,
+
+    user: null,
   },
 
   //  ╦  ╦╔═╗╔═╗╔═╗╦ ╦╔═╗╦  ╔═╗
@@ -20,6 +31,12 @@ parasails.registerPage('item', {
   //  ║║║║ ║ ║╣ ╠╦╝╠═╣║   ║ ║║ ║║║║╚═╗
   //  ╩╝╚╝ ╩ ╚═╝╩╚═╩ ╩╚═╝ ╩ ╩╚═╝╝╚╝╚═╝
   methods: {
-    //…
+    // buyItem: async function (itemID) {
+
+    // },
+
+    submittedForm: function () {
+
+    },
   }
 });

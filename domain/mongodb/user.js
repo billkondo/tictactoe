@@ -47,6 +47,16 @@ module.exports = {
       { "$pull": { notifications: { notificationID } } }
     );
 
-  }
+  },
+
+  addToInventory: async function (user_id, inventoryEntry) {
+    const result = await mongodb.users().updateOne({userID : user_id}, {$push : {inventory : inventoryEntry}});
+    return result;
+  },
+
+  removeFromInventory: async function (user_id, inventoryEntry) {
+    const result = await mongodb.users().updateOne({userID : user_id}, {$pop : {inventory : 1}});
+    return result;
+  },
 
 };
