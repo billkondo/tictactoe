@@ -60,13 +60,34 @@ module.exports.sockets = {
   *                                                                          *
   ***************************************************************************/
 
-  // afterDisconnect: function(session, socket, done) {
-  //
-  //   // By default: do nothing.
-  //   // (but always trigger the callback)
-  //   return done();
-  //
-  // },
+  afterDisconnect: async function(session, socket, done) {
+
+    const socketID = socket.id;
+    const socketKey = `SOCKET:${socketID}`;
+    const socketData = await sails.appRedis.json.get(socketKey);
+
+    if (!socketData) {
+      return done();
+    }
+
+    await sails.appRedis.json.del(socketKey);
+
+    const { type } = socketData;
+    switch (type) {
+      case 'MATCH_ROOM': {
+        const { user, match } = socketData;
+
+        await sails.helpers.room.exitMatchRoom(user, match);
+
+        break;
+      }
+    }
+
+    // By default: do nothing.
+    // (but always trigger the callback)
+    return done();
+
+  },
 
 
   /***************************************************************************

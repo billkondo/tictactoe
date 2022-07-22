@@ -31,6 +31,8 @@ module.exports = function defineCustomHook(sails) {
       var redisPath = path.join(sails.config.appPath, '..', 'databases', 'redis');
       var redis = require(redisPath);
 
+      sails.appRedis = redis;
+
       await redis.connect();
 
       // Socket rooms names
@@ -41,6 +43,14 @@ module.exports = function defineCustomHook(sails) {
           const { userID } = user;
 
           return `USER_DATA:${userID}`;
+
+        },
+
+        match: function (match) {
+
+          const { matchID } = match;
+
+          return `MATCH:${matchID}`;
 
         },
 

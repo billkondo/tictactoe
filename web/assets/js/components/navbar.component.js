@@ -101,7 +101,7 @@ parasails.registerComponent('navbar', {
 
   },
   beforeDestroy: function() {
-    //…
+    Cloud.off('user-data-changed');
   },
 
   //  ╦╔╗╔╔╦╗╔═╗╦═╗╔═╗╔═╗╔╦╗╦╔═╗╔╗╔╔═╗
