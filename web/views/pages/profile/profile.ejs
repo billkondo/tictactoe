@@ -23,7 +23,10 @@
       <div class="tab-pane fade show active" id="games" role="tabpanel" aria-labelledby="home-tab">
         <game-card v-for="match in matches" :match="match" :key="match.matchID" />
       </div>
-      <div class="tab-pane fade" id="inventory" role="tabpanel" aria-labelledby="inventory-tab">2</div>
+      <div class="tab-pane fade" id="inventory" role="tabpanel" aria-labelledby="inventory-tab">
+        <div>Number of items: <%= inventory.length %></div>
+        <div><%- partial('../../partials/table.ejs', {columnNames : inventory.length > 0 ? Object.keys(inventory[0]) : [], lines : inventory.map(item => Object.values(item))}) %></div>
+      </div>
     </div>
   </div>
 
