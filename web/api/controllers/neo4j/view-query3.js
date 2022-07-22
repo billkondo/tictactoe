@@ -24,7 +24,6 @@ module.exports = {
       return u3, quantosSeguem, following
       order by quantosSeguem desc`;
       const parameters = {userID : userID};
-      console.log(parameters);
       const result = await sails.helpers.queryNeo4J.with({query : query, parameters : parameters });
       const lines = result.map(record => {
         return [record.get('u3').properties.username, record.get('quantosSeguem'), record.get('following').map(record => record?.properties?.username).join(', ')];

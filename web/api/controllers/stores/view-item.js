@@ -26,6 +26,8 @@ module.exports = {
       storeName: ad.store.name,
       storeURL: `/stores/items/${ad.store.storeID}`,
       itemName: ad.item.name,
+      itemID : itemID,
+      storeID : storeID
     };
 
   }

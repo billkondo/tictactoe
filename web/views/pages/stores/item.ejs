@@ -33,6 +33,10 @@
         <div>
           <b><%= ad.promoValue || ad.item.value %></b>
           <i class="fa <%= ad.item.coin.iconCSSClass %> ml-1"></i>
+          <!-- <button class="btn" @click="buyItem(itemID)">Buy</button> -->
+          <ajax-form action="buyItem" :syncing.sync="syncing" :form-data="{item_id : itemID, store_id : storeID}" :form-rules="formRules" :form-errors.sync="formErrors" @submitted="submittedForm">
+            <ajax-button :syncing="syncing" class="btn-dark btn-lg btn-block">Buy</ajax-button>
+          </ajax-form>
         </div>
       </div>
     </div>
