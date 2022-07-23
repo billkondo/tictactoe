@@ -322,6 +322,22 @@ RETURNS TRIGGER AS $$
     END; 
 $$ LANGUAGE plpgsql;
 
+CREATE OR REPLACE PROCEDURE addTransaction(userID uuid, valor integer, moeda_id text)
+LANGUAGE plpgsql
+AS $$
+BEGIN
+INSERT INTO transacao (exchange_id, user_id, data, valor, tipo_da_moeda)
+VALUES ( gen_random_uuid(), userID, CURRENT_TIMESTAMP, valor, moeda_id);
+
+
+UPDATE carteira SET saldo = saldo - valor
+WHERE carteira.user_id = userID AND carteira.coin_id = moeda_id;
+IF NOT FOUND THEN
+RAISE EXCEPTION 'Carteira not found';
+END IF;
+END;
+$$;
+
 -- TRIGGERS
 
 -- CREATE TRIGGER AdquireGeraTransacao

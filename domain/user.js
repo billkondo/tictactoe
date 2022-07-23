@@ -75,6 +75,9 @@ module.exports = {
 
   },
 
+  findByUsernameMongo: async function (username) {
+    return await mongodb.user.find(username);
+  },
 
   findByID: async function (userID) {
 

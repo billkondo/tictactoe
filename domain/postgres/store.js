@@ -138,6 +138,13 @@ module.exports = {
 
   },
 
+  addTransaction : async function (user_id, valor, moeda_id) {
+    const result = postgres`
+    CALL addTransaction(${user_id}, ${valor}, ${moeda_id});
+    `;
+    return result;
+  },
+
 
   mapStore: function (store) {
 
