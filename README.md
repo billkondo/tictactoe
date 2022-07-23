@@ -107,6 +107,14 @@ The logic for handling database connections are at **databases** folder.
 - Buying items from stores
 - Real-time notifications
 
+## Technical decisions
+
+- Sails offers an ORM. It was decided that the Postgres data would not be migrated to this ORM. 
+  The only functionality related to the ORM kept was the User model, which is used in authentication flow.
+- The Sails Hooks (Middlewares) are at [index.js](/web/api/hooks/custom/index.js).
+- The [domain](/domain/) contains logic that does not depend on the web framework.
+- The [domain](/domain/) contains [mongodb](/domain/mongodb/), [redis](/domain/redis/), [postgres](/domain/postgres/) and [neo4j](/domain/neo4j/) folders, which contains database queries.
+
 ## Known issues
 
 - It's not possible to start a new match yet
