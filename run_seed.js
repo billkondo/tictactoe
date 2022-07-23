@@ -23,6 +23,8 @@ const { coins, MATCH_COIN, TOURNMENT_COIN } = require('./domain/store/coins');
 const seedStoreItems = require('./seed/items/seed_stores_items');
 const seedUsersWalletsForCoins = require('./seed/wallet/seed_users_wallets_for_coin');
 const user = require('./domain/user');
+const fs = require('fs');
+const path = require('path');
 
 
 const runSeed = async () => {
@@ -115,7 +117,13 @@ const runSeed = async () => {
   
   console.info('Seed Invites');
   await seedInvites(INVITES_COUNT, usersData);
-  
+
+  console.info('Cache Users');
+  fs.writeFileSync(
+    path.join(__dirname, 'seeded_users'), 
+    JSON.stringify(users, null, 2), 
+    { encoding: 'utf-8', flag: 'w' }
+  );
 };
 
 
