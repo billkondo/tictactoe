@@ -57,6 +57,8 @@ module.exports = {
     await mongodb.user.create(userData);
     await neo4j.user.create(user, userGameData);
 
+    return user;
+
   },
 
 

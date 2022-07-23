@@ -23,13 +23,7 @@ module.exports = {
   fn: async function () {
 
     const { matchID } = this.req.params;
-    let match = await sails.appDomain.match.findOngoingMatch(matchID);
-
-    if (match) {
-
-    } else {
-      match = await sails.appDomain.match.findMatch(matchID);
-    }
+    const match = await sails.helpers.findMatch(matchID);
 
     if (!match) {
       throw 'notFound';

@@ -13,7 +13,11 @@ parasails.registerPage('match', {
     //…
   },
   mounted: async function() {
-    //…
+
+    const { matchID } = this.match;
+
+    await Cloud.observeMatch(matchID);
+
   },
 
   //  ╦╔╗╔╔╦╗╔═╗╦═╗╔═╗╔═╗╔╦╗╦╔═╗╔╗╔╔═╗

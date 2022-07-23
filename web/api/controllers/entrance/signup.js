@@ -140,7 +140,8 @@ the account verification message.)`,
       sails.log.info('Skipping new account email verification... (since `verifyEmailAddresses` is disabled)');
     }
 
-    await sails.appDomain.user.create({emailAddress, fullName, username});
+    const user = await sails.appDomain.user.create({emailAddress, fullName, username});
+    await sails.appDomain.store.initializeUser(user);
 
   }
 

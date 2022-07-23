@@ -3,6 +3,9 @@ const mongodb = require('../mongodb');
 const officialStore = require('./official_store');
 
 
+const { coins } = require('./coins');
+
+
 module.exports = {
 
 
@@ -67,5 +70,14 @@ module.exports = {
     return 'success;'
 
   },
+
+  initializeUser: async function (user) {
+
+    for (const coin of coins) {
+      await postgres.wallet.create(user, { coin, balance: 0 });
+    }
+
+  },
+
 
 };

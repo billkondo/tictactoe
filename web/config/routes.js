@@ -83,6 +83,7 @@ module.exports.routes = {
 
   'POST /api/v1/user/search-user':                    { action: 'user/search-user' },
 
-  'POST  /api/v1/observe-my-session':                 { action: 'observe-my-session', hasSocketFeatures: true },
-  'POST /api/v1/observe-user-data':                   { action: 'observe-user-data',  hasSocketFeatures: true },
+  'POST /api/v1/observe-my-session':                  { action: 'observe-my-session',  hasSocketFeatures: true },
+  'POST /api/v1/observe-user-data':                   { action: 'observe-user-data',   hasSocketFeatures: true },
+  'POST /api/v1/match/observe-match':                 { action: 'match/observe-match', hasSocketFeatures: true },
 };
